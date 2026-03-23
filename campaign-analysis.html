@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lemlist Campaign Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --border: #2e3350;
+      --accent: #6c63ff; --green: #22c55e; --yellow: #eab308; --red: #ef4444;
+      --text: #e2e8f0; --muted: #94a3b8; --radius: 14px; --sidebar: 268px;
+    }
+    body { background: var(--bg); color: var(--text); font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; display: flex; line-height: 1.6; }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      width: var(--sidebar); min-height: 100vh; background: var(--surface);
+      border-right: 1px solid var(--border); display: flex; flex-direction: column;
+      position: fixed; top: 0; left: 0; z-index: 100; transition: transform .3s;
+    }
+    #sidebar-header { padding: 24px 20px 16px; border-bottom: 1px solid var(--border); }
+    .sidebar-logo { font-size: 13px; font-weight: 800; letter-spacing: .05em; color: #a5a0ff; text-transform: uppercase; margin-bottom: 3px; }
+    .sidebar-sub { font-size: 11px; color: var(--muted); }
+    #campaigns-list { flex: 1; overflow-y: auto; padding: 12px 10px; }
+    .campaign-btn {
+      width: 100%; text-align: left; background: none; border: 1px solid transparent;
+      border-radius: 10px; padding: 12px 14px; cursor: pointer; transition: all .15s;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .campaign-btn:hover { background: var(--surface2); border-color: var(--border); }
+    .campaign-btn.active { background: rgba(108,99,255,.12); border-color: rgba(108,99,255,.4); }
+    .cam-id { font-size: 12px; font-weight: 700; color: #a5a0ff; letter-spacing: .06em; }
+    .cam-week { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .cam-badges { display: flex; gap: 5px; margin-top: 7px; flex-wrap: wrap; }
+    .cam-badge { font-size: 10px; font-weight: 600; padding: 2px 7px; border-radius: 999px; }
+    .cb-green { background: rgba(34,197,94,.15); color: var(--green); }
+    .cb-yellow { background: rgba(234,179,8,.15); color: var(--yellow); }
+    .cb-red { background: rgba(239,68,68,.15); color: var(--red); }
+    .cb-gray { background: rgba(148,163,184,.1); color: var(--muted); }
+
+    /* ── MAIN ── */
+    #main { margin-left: var(--sidebar); flex: 1; min-width: 0; }
+
+    /* ── HEADER ── */
+    #page-header {
+      background: linear-gradient(135deg, #1a1d27 0%, #12142080 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 48px 32px 40px; position: relative; overflow: hidden;
+    }
+    #page-header::before {
+      content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%);
+      width: 500px; height: 300px;
+      background: radial-gradient(ellipse, rgba(108,99,255,.22) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .badge { display: inline-block; background: rgba(108,99,255,.18); border: 1px solid rgba(108,99,255,.45); color: #a5a0ff; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; padding: 4px 14px; border-radius: 999px; margin-bottom: 18px; }
+    #page-header h1 { font-size: clamp(22px, 3.5vw, 34px); font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+    #page-header .sub { color: var(--muted); font-size: 14px; }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 22px; }
+    .pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 999px; padding: 5px 16px; font-size: 13px; color: var(--muted); }
+    .pill strong { color: var(--text); }
+
+    /* ── CONTENT ── */
+    #content { max-width: 1020px; padding: 40px 28px 80px; display: flex; flex-direction: column; gap: 40px; }
+    .section-title { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+    /* KPI CARDS */
+    .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; }
+    .kpi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 20px; transition: border-color .2s, transform .2s; }
+    .kpi-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .kpi-card .label { font-size: 11px; color: var(--muted); margin-bottom: 7px; text-transform: uppercase; letter-spacing: .07em; }
+    .kpi-card .value { font-size: 30px; font-weight: 700; letter-spacing: -.02em; }
+    .kpi-card .sub { font-size: 11px; color: var(--muted); margin-top: 4px; }
+
+    /* CHART */
+    .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 26px; }
+    .chart-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 5px; }
+    .chart-card p { font-size: 13px; color: var(--muted); margin-bottom: 22px; }
+    .chart-wrapper { position: relative; height: 280px; }
+
+    /* SEGMENTS TABLE */
+    .segments { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .seg-header, .seg-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 2fr; align-items: center; padding: 13px 22px; gap: 8px; }
+    .seg-header { background: var(--surface2); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .seg-row { border-bottom: 1px solid var(--border); font-size: 13px; transition: background .15s; }
+    .seg-row:last-child { border-bottom: none; }
+    .seg-row:hover { background: var(--surface2); }
+    .seg-name { font-weight: 600; }
+    .seg-tag { display: inline-block; font-size: 11px; padding: 2px 9px; border-radius: 999px; font-weight: 600; }
+    .tag-green { background: rgba(34,197,94,.15); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
+    .tag-yellow { background: rgba(234,179,8,.15); color: var(--yellow); border: 1px solid rgba(234,179,8,.3); }
+    .tag-red { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+    .tag-gray { background: rgba(148,163,184,.1); color: var(--muted); border: 1px solid rgba(148,163,184,.2); }
+    .rate-bar-wrap { display: flex; align-items: center; gap: 9px; }
+    .rate-bar { flex: 1; height: 6px; background: var(--surface2); border-radius: 999px; overflow: hidden; }
+    .rate-bar-fill { height: 100%; border-radius: 999px; transition: width .6s ease; }
+    .rate-val { font-size: 13px; font-weight: 600; min-width: 34px; text-align: right; }
+    .note-cell { font-size: 12px; color: var(--muted); }
+
+    /* TAKEAWAYS */
+    .takeaways-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+    .takeaway { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; display: flex; gap: 16px; align-items: flex-start; transition: border-color .2s; }
+    .takeaway:hover { border-color: var(--accent); }
+    .takeaway .num { font-size: 22px; font-weight: 800; color: rgba(108,99,255,.35); line-height: 1; min-width: 26px; }
+    .takeaway .body h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .takeaway .body p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+    /* LEADS */
+    .leads-list { display: flex; flex-direction: column; gap: 12px; }
+    .lead-card { background: var(--surface); border-radius: var(--radius); padding: 18px 22px; display: flex; align-items: flex-start; gap: 14px; }
+    .lead-dot { width: 10px; height: 10px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+    .lead-org { font-size: 12px; font-weight: 500; margin-bottom: 3px; }
+    .lead-name { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .lead-note { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* TWO COL */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    @media (max-width: 640px) { .two-col { grid-template-columns: 1fr; } }
+    .list-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; }
+    .list-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 16px; }
+    .list-card ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .list-card li { display: flex; gap: 10px; font-size: 13px; line-height: 1.55; color: var(--muted); }
+    .list-card li .icon { flex-shrink: 0; margin-top: 2px; }
+
+    /* NEXT ACTIONS */
+    .actions-list { display: flex; flex-direction: column; gap: 10px; }
+    .action-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 20px; display: flex; align-items: flex-start; gap: 14px; transition: border-color .2s; }
+    .action-item:hover { border-color: var(--accent); }
+    .action-num { font-size: 11px; font-weight: 700; background: rgba(108,99,255,.18); color: #a5a0ff; border-radius: 6px; padding: 2px 8px; flex-shrink: 0; }
+    .action-text { font-size: 13px; line-height: 1.55; }
+    .action-text strong { color: var(--text); }
+    .action-text span { color: var(--muted); }
+
+    /* KPI SNAPSHOT */
+    .kpi-snapshot { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .kpi-snapshot-header { background: var(--surface2); padding: 16px 22px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .kpi-snapshot-header h3 { font-size: 15px; font-weight: 700; }
+    .kpi-warning { font-size: 12px; color: var(--yellow); background: rgba(234,179,8,.1); border: 1px solid rgba(234,179,8,.25); border-radius: 999px; padding: 3px 12px; }
+    .kpi-snapshot-body { display: grid; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 640px) { .kpi-snapshot-body { grid-template-columns: 1fr; } }
+    .kpi-snapshot-col { padding: 22px; border-right: 1px solid var(--border); }
+    .kpi-snapshot-col:last-child { border-right: none; }
+    .kpi-snapshot-col h4 { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+    .kpi-row { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; border-bottom: 1px solid rgba(46,51,80,.5); font-size: 13px; gap: 12px; }
+    .kpi-row:last-child { border-bottom: none; }
+    .kpi-row .kr-label { color: var(--muted); white-space: nowrap; }
+    .kpi-row .kr-val { font-weight: 600; text-align: right; }
+
+    /* MOBILE */
+    #menu-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 200; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 7px 11px; cursor: pointer; color: var(--text); font-size: 18px; line-height: 1; }
+    @media (max-width: 880px) {
+      #menu-toggle { display: block; }
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+      #main { margin-left: 0; }
+    }
+
+    footer { text-align: center; padding: 22px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+  </style>
+</head>
+<body>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="sidebar-logo">📊 Campaign Dashboard</div>
+    <div class="sidebar-sub">Lemlist · Outbound P27 France</div>
+  </div>
+  <div id="campaigns-list"></div>
+</nav>
+
+<div id="main">
+  <div id="page-header"></div>
+  <div id="content"></div>
+  <footer>Lemlist Campaign Dashboard · P27 France · Built with Claude</footer>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════
+//  CAMPAIGN DATA
+//  To add a new week: copy one object, fill it in, add it at the TOP
+//  of the array. The first entry is always shown by default.
+// ═══════════════════════════════════════════════════════════════════
+const CAMPAIGNS = [
+  {
+    id: 'CAM-003',
+    batch: 'Batch 1',
+    region: 'P27 France',
+    week: 'March 14–20, 2026',
+    tone: 'Présidentielles 2027 / Mobilization Strategy',
+
+    kpis: [
+      { label: 'Campaigns analyzed', value: '5',    sub: 'Batch 1 only',                   color: '#a5a0ff' },
+      { label: 'Contacts reached',   value: '188',  sub: 'Segments A, B, C, D, F',         color: '#60d9fa' },
+      { label: 'Messages sent',      value: '~360', sub: 'Steps 1 + 2 (follow-ups)',        color: '#c4b5fd' },
+      { label: 'Avg Reply Rate',     value: '3.8%', sub: 'by message · 7.4% by contact',   color: '#22c55e' },
+      { label: 'Best Reply Rate',    value: '9.5%', sub: 'Network/Movement (C)',            color: '#22c55e' },
+      { label: 'Avg Bounce',         value: '2.3%', sub: 'Peak: 8.2% on Others (F)',       color: '#eab308' },
+    ],
+
+    segments: [
+      {
+        name: '🔥 Network/Movement', code: 'C', contacts: '—',
+        delivLabel: '100%',       delivClass: 'tag-green',
+        replyRate: 9.5, replyMax: 9.5, replyColor: '#22c55e',
+        note: 'Priority ICP · maximum fit with 2027 mobilization framing',
+      },
+      {
+        name: 'Think Tank', code: 'D', contacts: '24',
+        delivLabel: '100%',       delivClass: 'tag-green',
+        replyRate: 4.2, replyMax: 9.5, replyColor: '#eab308',
+        note: 'Small volume · needs more analytical angle',
+      },
+      {
+        name: 'Large Nat Exec', code: 'A', contacts: '—',
+        delivLabel: '~98%',       delivClass: 'tag-yellow',
+        replyRate: 2.7, replyMax: 9.5, replyColor: '#94a3b8',
+        note: 'Average performance · on trend',
+      },
+      {
+        name: 'Others', code: 'F', contacts: '—',
+        delivLabel: '⚠ 8.2% bounce', delivClass: 'tag-red',
+        replyRate: 2.7, replyMax: 9.5, replyColor: '#94a3b8',
+        note: 'Poor list quality · clean before next send',
+      },
+      {
+        name: 'National Directors', code: 'B', contacts: '45',
+        delivLabel: '—',           delivClass: 'tag-gray',
+        replyRate: 0,   replyMax: 9.5, replyColor: '#ef4444',
+        note: 'Complete failure · title too senior · switch to LinkedIn',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'Network/Movement = Priority ICP',
+        body: '3× the average reply rate, 0% bounce. This segment responds to the 2027 mobilization framing — scale it up.',
+      },
+      {
+        title: 'Campaign B (Directors) = complete failure',
+        body: '0 replies out of 45 contacts. Title is too senior for cold outbound. Test LinkedIn or rethink the angle.',
+      },
+      {
+        title: 'Segment "Others" = list quality issue',
+        body: '8.2% bounce — domain deliverability at risk. Must be cleaned before the next send.',
+      },
+      {
+        title: 'Step 2 drives conversations',
+        body: 'Follow-up generates the majority of replies in segment C. Multi-touch sequence validated — keep going.',
+      },
+      {
+        title: 'Internal contacts pollute metrics',
+        body: '2 Qomon contacts (layla@, jason@...) were included in Campaign C. Exclude them systematically before launch.',
+      },
+    ],
+
+    leads: [
+      {
+        name: 'Benoit Granier',
+        org: 'Réseau Action Climat · Hot Lead 🔥',
+        orgColor: '#22c55e',
+        dotColor: '#22c55e',
+        borderColor: 'rgba(34,197,94,.35)',
+        note: '"I\'ll share this internally, we\'ll come back to you" — clear intent signal.',
+        cta: 'Follow up today.',
+        ctaColor: '#22c55e',
+      },
+      {
+        name: 'Laurence Lepetit',
+        org: 'France Générosités · Warm Reconnection',
+        orgColor: '#c4b5fd',
+        dotColor: '#6c63ff',
+        borderColor: 'rgba(108,99,255,.35)',
+        note: 'Already connected to Qomon via "La France qui se bat" — favorable context for next steps.',
+        cta: '',
+        ctaColor: '',
+      },
+    ],
+
+    whatWorked: [
+      '"Présidentielles 2027 / mobilization" framing — triggers responses from network/movement orgs',
+      'Think Tank: perfect deliverability + solid engagement — segment to keep',
+      'Step 2 (follow-ups) drives the majority of replies — multi-touch sequence validated',
+      '1 hot lead (Benoit Granier) + 1 warm reconnection (Laurence Lepetit) generated',
+    ],
+
+    whatDidnt: [
+      { text: 'Campaign B (Directors): 0% reply — senior national directors don\'t engage via cold outbound', level: 'red' },
+      { text: 'Segment "Others": 8.2% bounce — direct impact on domain reputation', level: 'red' },
+      { text: 'Zero clicks across all 5 campaigns — CTA is not actionable or perceived value is too low', level: 'red' },
+      { text: 'No contacts tagged "Interested" in Lemlist despite real signals — manual qualification missing', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Follow up Benoit Granier</strong> <span>(Réseau Action Climat) — clear intent signal, contact today</span>', highlight: true },
+      { text: '<strong>Exclude internal Qomon contacts</strong> <span>from all lists before next batch</span>' },
+      { text: '<strong>Double down on Network/Movement + Think Tank</strong> <span>for Batch 2 — most receptive ICPs</span>' },
+      { text: '<strong>Rebuild the "Others" list</strong> <span>with stricter enrichment criteria</span>' },
+      { text: '<strong>Redesign Campaign B (Directors)</strong> <span>— test LinkedIn or case study / social proof angle</span>' },
+      { text: '<strong>Tag "Interested" replies in Lemlist</strong> <span>for a reliable positive reply rate</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Batch 1',
+      batch: [
+        { label: 'Total Sent',              val: '188 contacts · ~360 messages', color: '' },
+        { label: 'Avg Reply Rate',          val: '3.8% (msg) · 7.4% (contacts)', color: '#22c55e' },
+        { label: 'Avg Positive Reply Rate', val: '0% tagged in Lemlist',         color: '#94a3b8' },
+        { label: 'Avg Bounce',              val: '2.3%',                          color: '#eab308' },
+        { label: 'Best',                    val: 'C → 9.5% reply, 0% bounce',    color: '#22c55e' },
+        { label: 'Worst',                   val: 'B → 0% reply, 4.5% bounce',    color: '#ef4444' },
+      ],
+      global: [
+        { label: 'Total contacts reached',   val: '188',                                       color: '' },
+        { label: 'Avg reply rate',            val: '3.8%',                                      color: '#22c55e' },
+        { label: 'Highest bounce observed',   val: '8.2% (Others/F)',                           color: '#ef4444' },
+        { label: 'Tagged positive reply rate',val: '0% — behavioral signals unqualified',       color: '#94a3b8' },
+        { label: 'Manually identified leads', val: '2 (1 hot · 1 warm)',                        color: '#22c55e' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: 'Best: 9.5%', cls: 'cb-green' },
+      { text: '0% bounce C', cls: 'cb-green' },
+      { text: 'B: 0 replies', cls: 'cb-red' },
+    ],
+  },
+
+  // ── ADD NEW CAMPAIGNS HERE (copy the object above) ──────────────
+  // {
+  //   id: 'CAM-003',
+  //   batch: 'Batch 2',
+  //   region: 'P27 France',
+  //   week: 'March 21–27, 2026',
+  //   tone: '...',
+  //   kpis: [...],
+  //   segments: [...],
+  //   takeaways: [...],
+  //   leads: [...],
+  //   whatWorked: [...],
+  //   whatDidnt: [...],
+  //   nextActions: [...],
+  //   kpiSnapshot: { batchLabel: 'Batch 2', batch: [...], global: [...] },
+  //   sidebarBadges: [...],
+  // },
+];
+
+// ═══════════════════════════════════════════════════════════════════
+//  RENDERING ENGINE — no need to modify below
+// ═══════════════════════════════════════════════════════════════════
+let currentChart = null;
+
+function buildSidebar() {
+  document.getElementById('campaigns-list').innerHTML = CAMPAIGNS.map((c, i) => `
+    <button class="campaign-btn ${i === 0 ? 'active' : ''}" onclick="selectCampaign(${i}, this)">
+      <div class="cam-id">${c.id} ${c.batch}</div>
+      <div class="cam-week">Week of ${c.week}</div>
+      <div class="cam-badges">
+        ${c.sidebarBadges.map(b => `<span class="cam-badge ${b.cls}">${b.text}</span>`).join('')}
+      </div>
+    </button>
+  `).join('');
+}
+
+function selectCampaign(index, btn) {
+  document.querySelectorAll('.campaign-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  renderCampaign(CAMPAIGNS[index]);
+  if (window.innerWidth <= 880) closeSidebar();
+}
+
+function renderCampaign(c) {
+  renderHeader(c);
+  renderContent(c);
+}
+
+function renderHeader(c) {
+  document.getElementById('page-header').innerHTML = `
+    <div class="badge">Weekly Lemlist Campaign Analysis</div>
+    <h1>${c.id} ${c.batch} — ${c.region}</h1>
+    <p class="sub">Week of ${c.week} · ${c.kpis[0].value} campaigns analyzed</p>
+    <div class="pill-row">
+      <span class="pill">${c.batch} only</span>
+      <span class="pill">Tone: <strong>${c.tone}</strong></span>
+      <span class="pill"><strong>Multi-touch</strong> sequence validated</span>
+    </div>
+  `;
+}
+
+function renderContent(c) {
+  if (currentChart) { currentChart.destroy(); currentChart = null; }
+  const el = document.getElementById('content');
+  el.innerHTML =
+    renderKpis(c) +
+    renderChartSection(c) +
+    renderSegments(c) +
+    renderTakeaways(c) +
+    (c.leads && c.leads.length ? renderLeads(c) : '') +
+    renderAnalysis(c) +
+    renderNextActions(c) +
+    renderKpiSnapshot(c);
+
+  initChart(c);
+
+  // Animate progress bars
+  const bars = el.querySelectorAll('.rate-bar-fill');
+  const widths = Array.from(bars).map(b => b.style.width);
+  bars.forEach(b => b.style.width = '0');
+  setTimeout(() => bars.forEach((b, i) => { b.style.width = widths[i]; }), 120);
+}
+
+function renderKpis(c) {
+  return `<section>
+    <div class="section-title">Overview</div>
+    <div class="kpi-grid">
+      ${c.kpis.map(k => `
+        <div class="kpi-card">
+          <div class="label">${k.label}</div>
+          <div class="value" style="color:${k.color}">${k.value}</div>
+          <div class="sub">${k.sub}</div>
+        </div>`).join('')}
+    </div>
+  </section>`;
+}
+
+function renderChartSection(c) {
+  return `<section>
+    <div class="section-title">Performance by Segment</div>
+    <div class="chart-card">
+      <h3>Reply Rate by ICP</h3>
+      <p>Average reply rate per segment · ${c.batch} · ${c.week}</p>
+      <div class="chart-wrapper"><canvas id="replyChart"></canvas></div>
+    </div>
+  </section>`;
+}
+
+function initChart(c) {
+  const ctx = document.getElementById('replyChart');
+  if (!ctx) return;
+  const bg   = { '#22c55e': 'rgba(34,197,94,.85)',   '#eab308': 'rgba(234,179,8,.85)',  '#94a3b8': 'rgba(148,163,184,.6)', '#ef4444': 'rgba(239,68,68,.75)' };
+  const bdr  = { '#22c55e': 'rgba(34,197,94,1)',      '#eab308': 'rgba(234,179,8,1)',    '#94a3b8': 'rgba(148,163,184,.9)', '#ef4444': 'rgba(239,68,68,1)'   };
+  currentChart = new Chart(ctx.getContext('2d'), {
+    type: 'bar',
+    data: {
+      labels: c.segments.map(s => `${s.name} (${s.code})`),
+      datasets: [{
+        label: 'Reply Rate (%)',
+        data: c.segments.map(s => s.replyRate),
+        backgroundColor: c.segments.map(s => bg[s.replyColor]  || 'rgba(148,163,184,.6)'),
+        borderColor:     c.segments.map(s => bdr[s.replyColor] || 'rgba(148,163,184,.9)'),
+        borderWidth: 2, borderRadius: 8, borderSkipped: false,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#1a1d27', borderColor: '#2e3350', borderWidth: 1,
+          titleColor: '#e2e8f0', bodyColor: '#94a3b8', padding: 12,
+          callbacks: { label: ctx => ` ${ctx.parsed.y}% reply rate` }
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(46,51,80,.5)' }, ticks: { color: '#94a3b8', font: { size: 12 } } },
+        y: { grid: { color: 'rgba(46,51,80,.5)' }, ticks: { color: '#94a3b8', font: { size: 12 }, callback: v => v + '%' }, min: 0 }
+      }
+    }
+  });
+}
+
+function renderSegments(c) {
+  return `<section>
+    <div class="section-title">Segment Breakdown</div>
+    <div class="segments">
+      <div class="seg-header">
+        <span>Segment</span><span>Contacts</span><span>Deliverability</span><span>Reply Rate</span><span>Key Note</span>
+      </div>
+      ${c.segments.map(s => {
+        const pct = s.replyMax > 0 ? (s.replyRate / s.replyMax * 100).toFixed(0) : 0;
+        return `<div class="seg-row">
+          <span class="seg-name">${s.name} <span style="color:var(--muted);font-weight:400">(${s.code})</span></span>
+          <span>${s.contacts}</span>
+          <span><span class="seg-tag ${s.delivClass}">${s.delivLabel}</span></span>
+          <div class="rate-bar-wrap">
+            <div class="rate-bar"><div class="rate-bar-fill" style="width:${pct}%;background:${s.replyColor}"></div></div>
+            <span class="rate-val" style="color:${s.replyColor}">${s.replyRate}%</span>
+          </div>
+          <span class="note-cell">${s.note}</span>
+        </div>`;
+      }).join('')}
+    </div>
+  </section>`;
+}
+
+function renderTakeaways(c) {
+  return `<section>
+    <div class="section-title">Key Takeaways</div>
+    <div class="takeaways-grid">
+      ${c.takeaways.map((t, i) => `
+        <div class="takeaway">
+          <div class="num">${i + 1}</div>
+          <div class="body"><h4>${t.title}</h4><p>${t.body}</p></div>
+        </div>`).join('')}
+    </div>
+  </section>`;
+}
+
+function renderLeads(c) {
+  return `<section>
+    <div class="section-title">Leads & Warm Signals</div>
+    <div class="leads-list">
+      ${c.leads.map(l => `
+        <div class="lead-card" style="border:1px solid ${l.borderColor}">
+          <div class="lead-dot" style="background:${l.dotColor}"></div>
+          <div>
+            <div class="lead-org" style="color:${l.orgColor}">${l.org}</div>
+            <div class="lead-name">${l.name}</div>
+            <p class="lead-note">${l.note}${l.cta ? ` <strong style="color:${l.ctaColor}">${l.cta}</strong>` : ''}</p>
+          </div>
+        </div>`).join('')}
+    </div>
+  </section>`;
+}
+
+function renderAnalysis(c) {
+  const col = { red: '#ef4444', yellow: '#eab308', green: '#22c55e' };
+  return `<section>
+    <div class="section-title">Cross-Campaign Analysis</div>
+    <div class="two-col">
+      <div class="list-card">
+        <h3>✅ What Worked</h3>
+        <ul>
+          ${c.whatWorked.map(t => `<li><span class="icon" style="color:#22c55e">▸</span><span>${t}</span></li>`).join('')}
+        </ul>
+      </div>
+      <div class="list-card">
+        <h3>❌ What Didn't Work</h3>
+        <ul>
+          ${c.whatDidnt.map(t => `<li><span class="icon" style="color:${col[t.level] || '#94a3b8'}">▸</span><span>${t.text}</span></li>`).join('')}
+        </ul>
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderNextActions(c) {
+  return `<section>
+    <div class="section-title">Next Actions</div>
+    <div class="actions-list">
+      ${c.nextActions.map((a, i) => `
+        <div class="action-item" ${a.highlight ? 'style="border-color:rgba(34,197,94,.4)"' : ''}>
+          <span class="action-num">${i + 1}</span>
+          <div class="action-text">${a.text}</div>
+        </div>`).join('')}
+    </div>
+  </section>`;
+}
+
+function renderKpiSnapshot(c) {
+  const rows = arr => arr.map(r => `
+    <div class="kpi-row">
+      <span class="kr-label">${r.label}</span>
+      <span class="kr-val"${r.color ? ` style="color:${r.color}"` : ''}>${r.val}</span>
+    </div>`).join('');
+  return `<section>
+    <div class="section-title">KPI Snapshot</div>
+    <div class="kpi-snapshot">
+      <div class="kpi-snapshot-header">
+        <h3>Full Metrics Summary · ${c.kpiSnapshot.batchLabel}</h3>
+        <span class="kpi-warning">⚠ Open rates unreliable (tracking limitations)</span>
+      </div>
+      <div class="kpi-snapshot-body">
+        <div class="kpi-snapshot-col"><h4>${c.kpiSnapshot.batchLabel}</h4>${rows(c.kpiSnapshot.batch)}</div>
+        <div class="kpi-snapshot-col"><h4>Global</h4>${rows(c.kpiSnapshot.global)}</div>
+      </div>
+    </div>
+  </section>`;
+}
+
+function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
+function closeSidebar()   { document.getElementById('sidebar').classList.remove('open'); }
+
+// Init
+buildSidebar();
+if (CAMPAIGNS.length > 0) renderCampaign(CAMPAIGNS[0]);
+</script>
+</body>
+</html>
