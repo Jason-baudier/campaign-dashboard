@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow">
   <title>Lemlist Campaign Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
@@ -186,6 +187,156 @@
 //  of the array. The first entry is always shown by default.
 // ═══════════════════════════════════════════════════════════════════
 const CAMPAIGNS = [
+  {
+    id: 'CAM-005',
+    batch: 'Batch 1&2',
+    region: 'Noram & Europe Nordics',
+    week: 'March 18–24, 2026',
+    tone: 'CLC Event Hook',
+
+    kpis: [
+      { label: 'Campaigns analyzed',  value: '4',    sub: 'Noram Batch 1&2 + Nordics Email + LinkedIn', color: '#a5a0ff' },
+      { label: 'Contacts reached',    value: '209',  sub: 'Noram: 132 · Europe Nordics: 77',            color: '#60d9fa' },
+      { label: 'Messages sent',       value: '245+', sub: 'Noram tracked · Europe multi-channel',        color: '#c4b5fd' },
+      { label: 'Overall Reply Rate',  value: '6.2%', sub: '13 replies · Noram only (Europe: 0%)',        color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '1.9%', sub: '4 positives · Comms ICP only',                color: '#eab308' },
+      { label: 'Highest Bounce',      value: '9.3%', sub: 'Nordics email — above threshold',             color: '#ef4444' },
+    ],
+
+    segments: [
+      {
+        name: '✅ Communications', code: 'COMMS', contacts: '—',
+        delivLabel: '~96.7%',         delivClass: 'tag-green',
+        replyRate: 7.4, replyMax: 9.3, replyColor: '#22c55e',
+        note: 'Best Noram ICP · event hook resonates with Comms roles',
+      },
+      {
+        name: 'Campaign & Program Mgmt', code: 'CPM', contacts: '—',
+        delivLabel: '~93.5%',         delivClass: 'tag-yellow',
+        replyRate: 3.2, replyMax: 9.3, replyColor: '#eab308',
+        note: '0% positive reply · event hook angle doesn\'t land for this persona',
+      },
+      {
+        name: '⚠ Nordics Email', code: 'NE', contacts: '52',
+        delivLabel: '⚠ 9.3% bounce', delivClass: 'tag-red',
+        replyRate: 0,   replyMax: 9.3, replyColor: '#ef4444',
+        note: 'Stalled · highest bounce across all campaigns · re-enrich before resuming',
+      },
+      {
+        name: '⚠ Nordics LinkedIn', code: 'NLI', contacts: '25',
+        delivLabel: '4.5% connected', delivClass: 'tag-red',
+        replyRate: 0,   replyMax: 9.3, replyColor: '#ef4444',
+        note: '1 connection accepted · ~0 messages delivered · push invites first',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'CLC event hook = reply volume, not pipeline',
+        body: 'The hook generates responses but 11/13 replies were "I won\'t be attending." It surfaces contacts — it does not create meetings.',
+      },
+      {
+        title: 'Communications roles outperform Campaign/Program Mgmt',
+        body: '7.4% vs 3.2% reply rate. Comms roles are naturally more responsive to event-based social outreach.',
+      },
+      {
+        title: 'ICP contamination is significant in Noram',
+        body: 'List includes employer associations (BCMEA), non-CLC affiliates (SFPQ), and tourism HR orgs. At least 3–4 of 13 respondents were wrong-fit by design.',
+      },
+      {
+        title: 'Europe/Nordics is blocked at deliverability',
+        body: '9.3% email bounce (highest across all campaigns) + LinkedIn barely launched (1 connection accepted out of 25). Batch is effectively stalled.',
+      },
+      {
+        title: 'Organic referrals signal the pitch has legs',
+        body: '2 replies generated internal referrals (CMAW → organizer, CEA → membership lead). The angle works — but is often hitting the wrong person.',
+      },
+    ],
+
+    leads: [
+      {
+        name: 'Shipa Das',
+        org: 'Warm Lead · Open to Zoom Call',
+        orgColor: '#22c55e',
+        dotColor: '#22c55e',
+        borderColor: 'rgba(34,197,94,.35)',
+        note: 'Expressed interest in a Zoom call.',
+        cta: 'Follow up now.',
+        ctaColor: '#22c55e',
+      },
+      {
+        name: 'Austin Pasemco',
+        org: 'CMAW · Organic Referral',
+        orgColor: '#c4b5fd',
+        dotColor: '#6c63ff',
+        borderColor: 'rgba(108,99,255,.35)',
+        note: 'Referred internally by a CMAW contact — warm entry point into the organization.',
+        cta: 'Follow up now.',
+        ctaColor: '#a5a0ff',
+      },
+      {
+        name: 'Amanda Evans',
+        org: 'CEA · Organic Referral',
+        orgColor: '#c4b5fd',
+        dotColor: '#6c63ff',
+        borderColor: 'rgba(108,99,255,.35)',
+        note: 'Referred as membership lead by a CEA contact — validates the pitch has internal traction.',
+        cta: '',
+        ctaColor: '',
+      },
+    ],
+
+    whatWorked: [
+      'Event hook gets responses from Comms-role leads (7.4% reply rate)',
+      '2 organic referrals generated: Austin Pasemco (CMAW) and Amanda Evans (CEA)',
+      '1 warm lead open to a Zoom call (Shipa Das)',
+      'Competitive intel surfaced: BC Fed of Labour recently migrated to Action Network',
+    ],
+
+    whatDidnt: [
+      { text: 'Event hook fails when contacts aren\'t attending the CLC — majority reply = "not going to Winnipeg"', level: 'red' },
+      { text: 'ICP list quality: employer orgs, tourism HR, non-CLC unions included in Noram list', level: 'red' },
+      { text: 'Step 2 follow-up generates flat declines — no uplift on the sequence', level: 'yellow' },
+      { text: 'Europe email deliverability: 9.3% bounce on Nordics — above acceptable threshold', level: 'red' },
+      { text: 'LinkedIn barely launched — 1 connection accepted out of 25, ~0 messages actually delivered', level: 'red' },
+      { text: 'Campaign & Program Mgmt ICP: 3.2% reply, 0% positive — angle doesn\'t land for this persona', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Follow up on warm contacts now:</strong> <span>Shipa Das (Zoom), Rob Cottingham (Vancouver), Austin Pasemco (CMAW), Amanda Evans (CEA)</span>', highlight: true },
+      { text: '<strong>Scrub Noram list</strong> <span>— remove employer associations, non-CLC unions, duplicate org contacts before next batch</span>' },
+      { text: '<strong>Pivot messaging for non-attendees</strong> <span>— test a value-first angle decoupled from the CLC event hook</span>' },
+      { text: '<strong>Pause Europe/Nordics email</strong> <span>— re-enrich list before resuming (9.3% bounce is above acceptable threshold)</span>' },
+      { text: '<strong>Push LinkedIn connections for Europe</strong> <span>— get more invites accepted before attempting to message</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Noram Batch 1&2',
+      batch: [
+        { label: 'Total Sent',                  val: '245 msgs · 132 prospects',                   color: '' },
+        { label: 'Best — Comms',                val: '7.4% reply · 6.2% positive · 3.3% bounce',  color: '#22c55e' },
+        { label: 'Worst — Campaign Mgmt',       val: '3.2% reply · 0% positive · 6.5% bounce',    color: '#ef4444' },
+        { label: 'Avg Reply Rate',              val: '5.3%',                                       color: '#22c55e' },
+        { label: 'Avg Bounce',                  val: '5%',                                         color: '#eab308' },
+        { label: 'Nordics Email (CAM-004)',      val: '52 prospects · 0% reply · 9.3% bounce',     color: '#ef4444' },
+        { label: 'Nordics LinkedIn (CAM-004)',   val: '25 prospects · 4.5% connection · 0% reply', color: '#ef4444' },
+      ],
+      global: [
+        { label: 'Total contacts reached',   val: '209',                        color: '' },
+        { label: 'Overall reply rate',        val: '6.2% (contacts)',            color: '#22c55e' },
+        { label: 'Positive reply rate',       val: '1.9%',                       color: '#eab308' },
+        { label: 'Highest bounce observed',   val: '9.3% (Nordics email)',       color: '#ef4444' },
+        { label: 'Leads identified',          val: '3 (1 warm + 2 referrals)',   color: '#22c55e' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: 'Comms: 7.4%',     cls: 'cb-green' },
+      { text: '2 referrals',     cls: 'cb-green' },
+      { text: 'Nordics stalled', cls: 'cb-red' },
+    ],
+  },
+
   {
     id: 'CAM-003',
     batch: 'Batch 1',
