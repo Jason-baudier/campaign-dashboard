@@ -188,6 +188,192 @@
 // ═══════════════════════════════════════════════════════════════════
 const CAMPAIGNS = [
   {
+    id: 'CAM-004',
+    batch: '1st Outreach',
+    region: 'Europe — Nordics',
+    week: 'March 21–27, 2026',
+    tone: 'N/A — Deliverability blocked, messaging not yet evaluated',
+
+    kpis: [
+      { label: 'Campaigns analyzed',  value: '2',    sub: 'Email + LinkedIn · Nordics political orgs',            color: '#a5a0ff' },
+      { label: 'Contacts reached',    value: '74',   sub: 'Email: ~52 · LinkedIn: ~25',                           color: '#60d9fa' },
+      { label: 'Messages sent',       value: '99',   sub: 'Email primary · LinkedIn early stage (2 msgs sent)',   color: '#c4b5fd' },
+      { label: 'Reply Rate',          value: '0%',   sub: 'Blocked by deliverability — no replies on any channel', color: '#ef4444' },
+      { label: 'Email Bounce Rate',   value: '9.3%', sub: 'Above threshold — re-enrich required before Wave 2',   color: '#ef4444' },
+      { label: 'LinkedIn Connection', value: '4.5%', sub: '1 invite accepted out of ~25 · 2 messages sent',       color: '#eab308' },
+    ],
+
+    segments: [
+      {
+        name: '⚠ Nordics Email', code: 'NE', contacts: '~52',
+        delivLabel: '⚠ 9.3% bounce', delivClass: 'tag-red',
+        replyRate: 0, replyMax: 9.3, replyColor: '#ef4444',
+        note: 'Deliverability blocked · validate list before Wave 2 · domain reputation at risk',
+      },
+      {
+        name: '⚠ Nordics LinkedIn', code: 'NLI', contacts: '~25',
+        delivLabel: '4.5% connected', delivClass: 'tag-red',
+        replyRate: 0, replyMax: 9.3, replyColor: '#ef4444',
+        note: 'Near-unstarted · 1 invite accepted · 2 msgs sent · push connections before messaging',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'Deliverability must be fixed before messaging can be evaluated',
+        body: '9.3% email bounce is above the acceptable threshold. No conclusions on copy or tone are possible until the list is validated.',
+      },
+      {
+        title: 'LinkedIn is near-unstarted',
+        body: 'Only 2 messages sent, 1 invite accepted out of ~25 attempts. The channel is too early-stage to yield any signal.',
+      },
+      {
+        title: 'No conclusions on ICP fit or tone yet',
+        body: 'Zero replies and a stalled LinkedIn channel mean the campaign is blocked at infrastructure — not at messaging.',
+      },
+      {
+        title: 'Email data quality risks domain reputation',
+        body: '9.3% bounce must be resolved before Wave 2. Run the full list through Hunter or NeverBounce validation.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      'LinkedIn channel initiated — groundwork laid, connections being built',
+      'Email infrastructure itself is functional — the issue is data quality, not sending setup',
+    ],
+
+    whatDidnt: [
+      { text: 'Email: 0% reply + 9.3% bounce — deliverability blocked before messaging could be tested', level: 'red' },
+      { text: 'LinkedIn near-unstarted: only 1 connection accepted out of ~25 invites — ~0 messages delivered', level: 'red' },
+      { text: 'No ICP signal possible — campaign stalled at infrastructure level, not messaging', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Validate Nordic contact list</strong> <span>through Hunter or NeverBounce before Wave 2 — 9.3% bounce is above acceptable threshold</span>', highlight: true },
+      { text: '<strong>Push LinkedIn connections for Nordics</strong> <span>— get more invites accepted before attempting to message</span>' },
+      { text: '<strong>Pause email until list is validated</strong> <span>— do not re-send to current list, domain reputation at risk</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: '1st Outreach',
+      batch: [
+        { label: 'Total Sent',              val: '99 msgs · 74 contacts',          color: '' },
+        { label: 'Email reply rate',        val: '0%',                             color: '#ef4444' },
+        { label: 'Email bounce rate',       val: '9.3% — above threshold',        color: '#ef4444' },
+        { label: 'LinkedIn connection rate',val: '4.5% (1 of ~25 invites)',        color: '#eab308' },
+        { label: 'LinkedIn msgs sent',      val: '2 (early stage)',               color: '#94a3b8' },
+      ],
+      global: [
+        { label: 'Total contacts reached',  val: '74',                                      color: '' },
+        { label: 'Overall reply rate',      val: '0%',                                      color: '#ef4444' },
+        { label: 'Highest bounce observed', val: '9.3% (email)',                            color: '#ef4444' },
+        { label: 'Leads identified',        val: '0',                                       color: '#94a3b8' },
+        { label: 'Status',                  val: 'Stalled — deliverability must be fixed',  color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '0% reply',      cls: 'cb-red' },
+      { text: '9.3% bounce',   cls: 'cb-red' },
+      { text: 'Validate list', cls: 'cb-yellow' },
+    ],
+  },
+
+  {
+    id: 'CAM-003',
+    batch: 'Batch 2',
+    region: 'P27 France',
+    week: 'March 21–27, 2026',
+    tone: 'N/A — Zero engagement, language barrier suspected',
+
+    kpis: [
+      { label: 'Campaigns analyzed',  value: '3',    sub: '3 ICP segments · France P27',                       color: '#a5a0ff' },
+      { label: 'Contacts reached',    value: '118',  sub: 'All 3 segments combined',                            color: '#60d9fa' },
+      { label: 'Messages sent',       value: '222',  sub: 'Multi-step sequence',                                color: '#c4b5fd' },
+      { label: 'Reply Rate',          value: '0%',   sub: 'Full market failure — zero engagement',              color: '#ef4444' },
+      { label: 'Avg Bounce Rate',     value: '7.1%', sub: 'Best: 4.7% (Senior) · Worst: 9.6% (Grassroots)',    color: '#eab308' },
+      { label: 'Delivery Rate',       value: '90–95%', sub: 'High delivery but zero opens — language barrier', color: '#94a3b8' },
+    ],
+
+    segments: [
+      {
+        name: '⚠ Large National Directors', code: 'LND', contacts: '—',
+        delivLabel: '95.3% (4.7% bounce)', delivClass: 'tag-yellow',
+        replyRate: 0, replyMax: 9.6, replyColor: '#ef4444',
+        note: 'Best data quality · lowest bounce · zero replies — senior title, wrong channel for cold outbound',
+      },
+      {
+        name: '⚠ Grassroots Segments', code: 'GS', contacts: '—',
+        delivLabel: '⚠ 9.6% bounce', delivClass: 'tag-red',
+        replyRate: 0, replyMax: 9.6, replyColor: '#ef4444',
+        note: 'Worst list quality · 9.6% bounce · zero replies — domain reputation risk',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'Full market failure — language barrier, not messaging',
+        body: 'Zero replies across all 3 segments despite 90–95% delivery rates and zero opens. This is a language/trust barrier, not a subject line problem.',
+      },
+      {
+        title: 'French-language sequences are required',
+        body: 'Sending English-language emails to French political organizations is structurally broken. Requires a full French-language reboot with a local sender identity.',
+      },
+      {
+        title: 'Data quality varies significantly by segment',
+        body: 'Senior targets (Large National Directors) show 4.7% bounce vs. 9.6% for grassroots segments — a 2× gap in list quality.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      'High delivery rates (90–95%) — email infrastructure is not the bottleneck',
+      'Large National Directors segment has best data quality (4.7% bounce) — list worth keeping for French-language reboot',
+    ],
+
+    whatDidnt: [
+      { text: 'Zero replies across all 3 segments — full market failure (118 contacts, 222 messages)', level: 'red' },
+      { text: 'Zero opens — language/trust barrier prevents engagement before messaging is even evaluated', level: 'red' },
+      { text: 'Grassroots segments: 9.6% bounce — above acceptable threshold, domain reputation at risk', level: 'red' },
+      { text: 'English-language sequences sent to French-market organizations — structural mismatch', level: 'red' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Pause France P27 email entirely</strong> <span>— reboot as French-language sequences with a local sender identity</span>', highlight: true },
+      { text: '<strong>Rebuild email list for grassroots segments</strong> <span>— 9.6% bounce requires full re-enrichment before next send</span>' },
+      { text: '<strong>Create French-language copy and sequences</strong> <span>— English approach is structurally broken for this market</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Batch 2',
+      batch: [
+        { label: 'Total Sent',        val: '222 msgs · 118 contacts',        color: '' },
+        { label: 'Reply Rate',        val: '0% — full market failure',       color: '#ef4444' },
+        { label: 'Avg Bounce',        val: '7.1%',                           color: '#eab308' },
+        { label: 'Best bounce',       val: '4.7% (Large Nat. Directors)',    color: '#eab308' },
+        { label: 'Worst bounce',      val: '9.6% (Grassroots segments)',     color: '#ef4444' },
+        { label: 'Delivery rate',     val: '90–95% — not the bottleneck',    color: '#94a3b8' },
+      ],
+      global: [
+        { label: 'Total contacts reached',   val: '118',                                      color: '' },
+        { label: 'Overall reply rate',       val: '0%',                                       color: '#ef4444' },
+        { label: 'Highest bounce observed',  val: '9.6% (Grassroots segments)',               color: '#ef4444' },
+        { label: 'Leads identified',         val: '0',                                        color: '#94a3b8' },
+        { label: 'Root cause',               val: 'Language barrier — French market',         color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '0% reply',      cls: 'cb-red' },
+      { text: 'Lang. barrier', cls: 'cb-red' },
+      { text: 'Pause & reboot', cls: 'cb-yellow' },
+    ],
+  },
+
+  {
     id: 'CAM-005',
     batch: 'Batch 1&2',
     region: 'Noram & Europe Nordics',
