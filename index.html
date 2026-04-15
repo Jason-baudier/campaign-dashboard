@@ -751,267 +751,54 @@ const CAMPAIGNS = [
 
   {
     id: 'CAM-008',
-    batch: 'EU · PPE+PES+LYMEC · Others',
+    batch: 'EU Political Parties — All Batches',
     region: 'Europe — EU',
-    week: 'April 14, 2026',
-    tone: 'EU Political Outreach',
-
-    kpis: [
-      { label: 'Contacts reached',    value: '91',    sub: 'Email · EU political parties',                      color: '#60d9fa' },
-      { label: 'Delivered',           value: '81',    sub: '89.0% delivery rate',                               color: '#eab308' },
-      { label: 'Reply Rate',          value: '1.1%',  sub: '1 reply · Paula Carvalho Olovsson',                 color: '#ef4444' },
-      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',              color: '#ef4444' },
-      { label: 'Bounce Rate',         value: '11.0%', sub: '10 bounces — CRITICAL data quality issue',          color: '#ef4444' },
-      { label: 'Open / Click',        value: '0%',    sub: 'No open or click signal detected',                  color: '#ef4444' },
-    ],
-
-    segments: [
-      {
-        name: '🚨 EU PPE+PES+LYMEC Others', code: 'EU-OTH', contacts: '91',
-        delivLabel: '⚠ 11.0% bounce',       delivClass: 'tag-red',
-        replyRate: 1.1, replyMax: 11.0, replyColor: '#ef4444',
-        note: 'Critical: 11% bounce on EU campaign · immediate list audit required before next send',
-      },
-    ],
-
-    takeaways: [
-      {
-        title: 'CRITICAL: 11.0% bounce rate — EU list audit required immediately',
-        body: '10 bounces from 91 contacts. Critical data quality issue for an EU email campaign. The PPE+PES+LYMEC source list is likely stale. Audit and clean the full list before any re-engagement send. Flag as data quality issue.',
-      },
-      {
-        title: '1 reply captured but body text not available — manual review needed',
-        body: 'Paula Carvalho Olovsson replied but the email body is stored server-side and not captured in preview. Requires manual review in Lemlist to determine intent and qualification.',
-      },
-      {
-        title: 'EU email continues to show structural deliverability weakness',
-        body: '11% bounce on this batch follows the historical pattern of elevated EU email bounce rates. Re-enrichment of the PPE, PES, and LYMEC source lists is structurally necessary before any further EU outreach.',
-      },
-    ],
-
-    leads: [],
-
-    whatWorked: [
-      '1 reply captured — some valid contact data exists in this segment',
-      '89% delivery rate confirms email infrastructure is functional',
-    ],
-
-    whatDidnt: [
-      { text: '11.0% bounce — critical data quality issue, immediate EU list audit required', level: 'red' },
-      { text: '1.1% reply rate — extremely low engagement for 91 contacts sent', level: 'red' },
-      { text: '0% open + 0% click — zero engagement signal beyond the single reply', level: 'red' },
-      { text: 'Reply body not available — pipeline qualification blocked without manual Lemlist review', level: 'yellow' },
-    ],
-
-    nextActions: [
-      { text: '<strong>Audit EU PPE+PES+LYMEC source list immediately</strong> <span>— 11% bounce is a critical data quality flag · re-enrich and verify before any re-engagement send</span>', highlight: true },
-      { text: '<strong>Manually review Paula Carvalho Olovsson reply in Lemlist</strong> <span>— body text not captured · may be a warm lead</span>' },
-      { text: '<strong>Flag as data quality issue in Clay/CRM</strong> <span>— track bounce root cause and prevent re-sending to invalid EU contacts</span>' },
-    ],
-
-    kpiSnapshot: {
-      batchLabel: 'EU · PPE+PES+LYMEC · Others',
-      batch: [
-        { label: 'Total Sent',          val: '91 contacts',              color: '' },
-        { label: 'Total Delivered',     val: '81 (89.0%)',               color: '#eab308' },
-        { label: 'Reply Rate',          val: '1.1% (1 reply)',           color: '#ef4444' },
-        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',     color: '#ef4444' },
-        { label: 'Bounce Rate',         val: '11.0% — CRITICAL',         color: '#ef4444' },
-        { label: 'Open / Click',        val: '0% / 0%',                  color: '#ef4444' },
-      ],
-      global: [
-        { label: 'Total Sent (all 8 campaigns)', val: '468 · 448 delivered (4.3% bounce)',    color: '' },
-        { label: 'Global Reply Rate',            val: '7.9% (37 replies)',                    color: '#eab308' },
-        { label: 'Positive Replies (global)',    val: '0 — leadsInterested = 0',              color: '#ef4444' },
-        { label: 'Critical issue',               val: 'EU bounce 11% — list audit required',  color: '#ef4444' },
-        { label: 'Action required',              val: 'Audit EU list · manual review reply',  color: '#ef4444' },
-      ],
-    },
-
-    sidebarBadges: [
-      { text: '11% bounce',   cls: 'cb-red' },
-      { text: 'EU audit now', cls: 'cb-red' },
-      { text: '1.1% reply',  cls: 'cb-red' },
-    ],
-  },
-
-  {
-    id: 'CAM-007',
-    batch: 'America Votes · 5 Batches',
-    region: 'USA',
-    week: 'March 28 – April 3, 2026',
-    tone: 'America Votes Summit Hook',
-
-    kpis: [
-      { label: 'Batches analyzed',    value: '5',     sub: 'Leadership B1/B2/B3 · Organizers/Com B1 · Others B1',   color: '#a5a0ff' },
-      { label: 'Contacts reached',    value: '143',   sub: 'Total sent across all batches',                          color: '#60d9fa' },
-      { label: 'Delivered',           value: '126',   sub: '88.1% delivery rate',                                    color: '#c4b5fd' },
-      { label: 'Reply Rate',          value: '4.9%',  sub: '7 replies across all batches',                           color: '#eab308' },
-      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged "Interested" in Lemlist',                 color: '#ef4444' },
-      { label: 'Avg Bounce Rate',     value: '11.9%', sub: 'Worst: Others B1 (17.9%) · Best: Leadership B1 (8.3%)', color: '#ef4444' },
-    ],
-
-    segments: [
-      {
-        name: '🔥 Others B1',       code: 'OTH-B1', contacts: '28',
-        delivLabel: '82.1% (17.9% bounce)', delivClass: 'tag-red',
-        replyRate: 10.7, replyMax: 10.7, replyColor: '#22c55e',
-        note: 'Top performer · grassroots ICP responds best · 1 hot lead (Swing Left)',
-      },
-      {
-        name: '✅ Leadership B3',    code: 'LDR-B3', contacts: '22',
-        delivLabel: '86.4% (13.6% bounce)', delivClass: 'tag-red',
-        replyRate: 9.1, replyMax: 10.7, replyColor: '#22c55e',
-        note: '2 replies · 1 absence (summit) · 1 direct contact received',
-      },
-      {
-        name: 'Leadership B1',       code: 'LDR-B1', contacts: '36',
-        delivLabel: '91.7% (8.3% bounce)',  delivClass: 'tag-yellow',
-        replyRate: 2.8, replyMax: 10.7, replyColor: '#eab308',
-        note: '1 reply (opt-out) · highest volume batch · hook not resonating at this level',
-      },
-      {
-        name: '⚠ Leadership B2',    code: 'LDR-B2', contacts: '34',
-        delivLabel: '88.2% (11.8% bounce)', delivClass: 'tag-yellow',
-        replyRate: 0, replyMax: 10.7, replyColor: '#ef4444',
-        note: '0% reply · good delivery · America Votes Summit hook not landing',
-      },
-      {
-        name: '⚠ Organizers/Com B1', code: 'ORG-B1', contacts: '23',
-        delivLabel: '91.3% (8.7% bounce)',  delivClass: 'tag-yellow',
-        replyRate: 0, replyMax: 10.7, replyColor: '#ef4444',
-        note: '0% reply · best deliverability in batch · hook angle to rework',
-      },
-    ],
-
-    takeaways: [
-      {
-        title: 'Others ICP outperforms Leadership significantly',
-        body: 'Others B1 (10.7%) and Leadership B3 (9.1%) far exceed Leadership B1 (2.8%), B2 (0%), and Organizers/Com (0%). Grassroots and field-level contacts are far more responsive to this hook.',
-      },
-      {
-        title: 'Hot lead identified: Swing Left already knows Qomon',
-        body: 'Gautham from Swing Left replied "Familiar with Qomon from my time at..." — warm entry point with existing product awareness. Remove from Lemlist and move to HubSpot immediately.',
-      },
-      {
-        title: 'Leadership B2 + Organizers/Com = zero signal',
-        body: 'Good deliverability on both segments but 0% reply. The "America Votes Summit" hook does not resonate with these profiles. Rework the angle or test a new subject line.',
-      },
-      {
-        title: 'Bounce rates consistently elevated across all batches',
-        body: 'Ranging from 8.3% to 17.9%. Others B1 has the worst bounce (17.9%). List quality must be improved before the next wave to protect sender reputation.',
-      },
-      {
-        title: '0 leads manually qualified in Lemlist',
-        body: 'All sequences stopped automatically on reply but no one was tagged "Interested." Manual qualification must be done systematically after each send wave.',
-      },
-    ],
-
-    leads: [
-      {
-        name: 'Gautham',
-        org: 'Swing Left · Hot Lead 🔥',
-        orgColor: '#22c55e',
-        dotColor: '#22c55e',
-        borderColor: 'rgba(34,197,94,.35)',
-        note: '"Hi Joshua - thanks for reaching out! Familiar with Qomon from my time at..." — existing product awareness confirmed.',
-        cta: 'Remove from Lemlist · move to HubSpot now.',
-        ctaColor: '#22c55e',
-      },
-    ],
-
-    whatWorked: [
-      'Others ICP (grassroots/field) is the most reactive segment — 10.7% reply rate',
-      'Leadership B3 generated 2 replies — multi-touch shows some traction with senior profiles',
-      'Hot lead from Swing Left surfaced — product already known to the contact',
-    ],
-
-    whatDidnt: [
-      { text: 'Leadership B2: 0% reply despite 88.2% delivery — summit hook not landing on this persona', level: 'red' },
-      { text: 'Organizers/Com B1: 0% reply despite 91.3% delivery — hook angle needs full rework', level: 'red' },
-      { text: 'Bounce rates range 8.3–17.9% across batches — list quality risk to sender reputation', level: 'yellow' },
-      { text: '0% positive reply tagged in Lemlist — manual qualification step missing systematically', level: 'yellow' },
-      { text: '6 of 7 replies were opt-outs or non-committal — only the Swing Left lead has real potential', level: 'yellow' },
-    ],
-
-    nextActions: [
-      { text: '<strong>Move Gautham (Swing Left) to HubSpot immediately</strong> <span>— remove from Lemlist · handle manually · product awareness confirmed</span>', highlight: true },
-      { text: '<strong>Rework hook for Leadership B2 + Organizers/Com</strong> <span>— test an angle decoupled from the America Votes Summit</span>' },
-      { text: '<strong>Scale up Others ICP targeting</strong> <span>— grassroots/field profiles outperform all other segments · prioritize for next batch</span>' },
-      { text: '<strong>Re-enrich Others B1 list</strong> <span>— 17.9% bounce is the highest in this campaign · clean before next send</span>' },
-      { text: '<strong>Qualify all reply contacts in Lemlist</strong> <span>— tag "Interested" systematically after each wave</span>' },
-    ],
-
-    kpiSnapshot: {
-      batchLabel: 'America Votes · 5 Batches',
-      batch: [
-        { label: 'Total Sent',            val: '143 contacts',                 color: '' },
-        { label: 'Total Delivered',       val: '126 (88.1%)',                  color: '#22c55e' },
-        { label: 'Reply Rate',            val: '4.9% (7 replies)',             color: '#eab308' },
-        { label: 'Positive Reply Rate',   val: '0% tagged in Lemlist',         color: '#ef4444' },
-        { label: 'Best — Others B1',      val: '10.7% reply · 17.9% bounce',  color: '#22c55e' },
-        { label: 'Worst — Leadership B2', val: '0% reply · 11.8% bounce',     color: '#ef4444' },
-      ],
-      global: [
-        { label: 'Total contacts (global)',   val: '257 sent · 206 delivered (80.2%)',        color: '' },
-        { label: 'Global reply rate',         val: '3.5% (9 replies)',                        color: '#eab308' },
-        { label: 'Positive replies (global)', val: '0% marked in Lemlist',                   color: '#ef4444' },
-        { label: 'Hot leads identified',      val: '1 — Gautham (Swing Left)',               color: '#22c55e' },
-        { label: 'Action required',           val: 'Qualify replies · move hot lead to CRM', color: '#eab308' },
-      ],
-    },
-
-    sidebarBadges: [
-      { text: 'Others: 10.7%',   cls: 'cb-green' },
-      { text: 'Swing Left lead', cls: 'cb-green' },
-      { text: 'Bounce: 11.9%',   cls: 'cb-yellow' },
-    ],
-  },
-
-  {
-    id: 'CAM-008',
-    batch: 'EU Political Parties · 3 Batches',
-    region: 'Europe — EU',
-    week: 'March 28 – April 3, 2026',
+    week: 'March 28 – April 14, 2026',
     tone: 'Political Party Outreach',
 
     kpis: [
-      { label: 'Batches analyzed',    value: '3',      sub: 'ECR · PPE+PES+LYMEC Members · PPE+PES+LYMEC Leadership',  color: '#a5a0ff' },
-      { label: 'Contacts reached',    value: '114',    sub: 'Total sent across all EU batches',                         color: '#60d9fa' },
-      { label: 'Delivered',           value: '80',     sub: '70.2% delivery rate — critically low',                     color: '#ef4444' },
-      { label: 'Reply Rate',          value: '1.75%',  sub: '2 replies — both flagged wrong sender name in template',   color: '#ef4444' },
-      { label: 'Positive Reply Rate', value: '0%',     sub: '0 leads tagged "Interested" in Lemlist',                   color: '#ef4444' },
-      { label: 'Avg Bounce Rate',     value: '30.8%',  sub: 'Catastrophic · ECR: 34.8% · PPE/PES Leadership: 31.7%',   color: '#ef4444' },
+      { label: 'Batches analyzed',    value: '4',     sub: 'ECR · PPE+PES+LYMEC Members/Leaders · Others (Apr)', color: '#a5a0ff' },
+      { label: 'Total Contacts',      value: '205',   sub: 'March: 114 · April Others: 91',                      color: '#60d9fa' },
+      { label: 'Reply Rate',          value: '1.5%',  sub: '3 replies total (March: 2 · April: 1)',              color: '#ef4444' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',               color: '#ef4444' },
+      { label: 'Avg Bounce Rate',     value: '20.4%', sub: 'March: 30.8% · April: 11.0% — all critical',        color: '#ef4444' },
+      { label: 'Critical Issues',     value: '2',     sub: 'Wrong sender name (Mar) · 11% bounce (Apr)',         color: '#ef4444' },
     ],
 
     segments: [
       {
-        name: '⚠ ECR Board Referral', code: 'ECR-B1',  contacts: '23',
-        delivLabel: '⚠ 34.8% bounce',  delivClass: 'tag-red',
+        name: '⚠ ECR Board Referral',       code: 'ECR-B1',  contacts: '23',
+        delivLabel: '⚠ 34.8% bounce',        delivClass: 'tag-red',
         replyRate: 4.3, replyMax: 4.3, replyColor: '#eab308',
-        note: 'Only batch with replies · wrong sender name ("Mr Mackintosh") · poor list quality',
+        note: 'Only March batch with replies · wrong sender name · poor list quality',
       },
       {
-        name: '⚠ PPE+PES+LYMEC Members', code: 'PPE-MEM', contacts: '50',
-        delivLabel: '⚠ 26.0% bounce',   delivClass: 'tag-red',
+        name: '⚠ PPE+PES+LYMEC Members',    code: 'PPE-MEM', contacts: '50',
+        delivLabel: '⚠ 26.0% bounce',        delivClass: 'tag-red',
         replyRate: 2.0, replyMax: 4.3, replyColor: '#eab308',
-        note: 'Wrong sender name in template ("Dear Henry") · highest volume batch · 26% bounce',
+        note: 'Wrong sender name in template · 26% bounce · March batch',
       },
       {
-        name: '⚠ PPE+PES+LYMEC Leaders', code: 'PPE-LDR', contacts: '41',
-        delivLabel: '⚠ 31.7% bounce',   delivClass: 'tag-red',
+        name: '⚠ PPE+PES+LYMEC Leaders',    code: 'PPE-LDR', contacts: '41',
+        delivLabel: '⚠ 31.7% bounce',        delivClass: 'tag-red',
         replyRate: 0, replyMax: 4.3, replyColor: '#ef4444',
-        note: '0% reply · 31.7% bounce · most senior profiles · worst performing segment',
+        note: '0% reply · 31.7% bounce · senior profiles not responding to cold email',
+      },
+      {
+        name: '🚨 EU Others (Apr)',           code: 'EU-OTH',  contacts: '91',
+        delivLabel: '⚠ 11.0% bounce',        delivClass: 'tag-red',
+        replyRate: 1.1, replyMax: 4.3, replyColor: '#ef4444',
+        note: 'April batch · CRITICAL 11% bounce · 1 reply (body not captured)',
       },
     ],
 
     takeaways: [
       {
-        title: 'Catastrophic bounce rates across all 3 EU batches (26–35%)',
-        body: 'The EU contact list is severely degraded. Bounce rates of 26–34.8% represent a critical risk to the sender reputation of joshua@teamqomon.com. The full list must be re-enriched and re-verified before any new send.',
+        title: 'Catastrophic bounce rates across all EU batches (11–35%)',
+        body: 'The EU contact list is severely degraded. Bounce rates of 11–34.8% represent a critical risk to sender reputation. The full list must be re-enriched and re-verified before any new send.',
       },
       {
-        title: 'Wrong sender name in templates — both replies addressed the wrong person',
+        title: 'Wrong sender name in templates — both March replies addressed the wrong person',
         body: 'ECR reply: "Dear Mr Mackintosh" · PPE/PES reply: "Dear Henry" — while the sender is Joshua. Variable mapping is broken. All EU templates must be audited and corrected before the next batch.',
       },
       {
@@ -1019,8 +806,12 @@ const CAMPAIGNS = [
         body: '41 contacts, 28 delivered, 0 replies. Senior EU profiles show zero engagement via cold email. A different channel (LinkedIn, referral) is likely required for this ICP.',
       },
       {
+        title: 'April Others: CRITICAL 11.0% bounce rate — EU list audit required immediately',
+        body: '10 bounces from 91 contacts. Critical data quality issue for an EU email campaign. The PPE+PES+LYMEC source list is likely stale. Audit and clean the full list before any re-engagement send.',
+      },
+      {
         title: 'EU contact data quality is structurally broken',
-        body: '30%+ bounce rates indicate the list was not properly verified. Re-enrichment via Hunter or NeverBounce is mandatory before any further EU outreach.',
+        body: '30%+ bounce rates in March and 11% in April indicate the list was not properly verified. Re-enrichment via Hunter or NeverBounce is mandatory before any further EU outreach.',
       },
     ],
 
@@ -1029,49 +820,54 @@ const CAMPAIGNS = [
     whatWorked: [
       'ECR Board Referral generated 1 reply — some valid contact data exists in that segment',
       'PPE+PES+LYMEC Members (50 sent) also generated 1 reply despite severe deliverability issues',
+      '1 April reply captured (Paula Carvalho Olovsson) — some valid contacts exist',
     ],
 
     whatDidnt: [
-      { text: 'EU bounce rate: 26–34.8% across all batches — catastrophic, sender reputation at critical risk', level: 'red' },
-      { text: 'Wrong sender name in templates — contacts received "Mr Mackintosh" and "Henry" instead of Joshua', level: 'red' },
+      { text: 'EU bounce rate: 26–34.8% (March) and 11% (April) — catastrophic, sender reputation at critical risk', level: 'red' },
+      { text: 'Wrong sender name in templates (March) — contacts received "Mr Mackintosh" and "Henry" instead of Joshua', level: 'red' },
       { text: 'PPE+PES+LYMEC Leadership: 0% reply despite 41 contacts sent — ICP not responding to cold email', level: 'red' },
-      { text: '70.2% delivery rate (vs 88.1% for CAM-007) — EU list quality is the root cause', level: 'red' },
+      { text: '70.2% delivery rate on March batches — EU list quality is the root cause', level: 'red' },
       { text: '0% positive reply tagged in Lemlist — manual qualification step missing', level: 'yellow' },
+      { text: 'April Others: 0% open + 0% click beyond the single reply — zero engagement signal', level: 'red' },
     ],
 
     nextActions: [
-      { text: '<strong>Pause all EU outreach immediately</strong> <span>— bounce rates of 26–35% are causing critical damage to joshua@teamqomon.com sender reputation</span>', highlight: true },
+      { text: '<strong>Pause all EU outreach immediately</strong> <span>— bounce rates of 11–35% are causing critical damage to joshua@teamqomon.com sender reputation</span>', highlight: true },
       { text: '<strong>Re-enrich and re-verify entire EU contact list</strong> <span>— run through Hunter / NeverBounce before any new send</span>' },
       { text: '<strong>Fix sender variable in all EU templates</strong> <span>— contacts receive "Mr Mackintosh" and "Henry" instead of Joshua · audit all templates before next batch</span>' },
       { text: '<strong>Test LinkedIn for PPE+PES+LYMEC Leadership</strong> <span>— senior EU profiles not responding to cold email · try a warm channel</span>' },
+      { text: '<strong>Manually review Paula Carvalho Olovsson reply in Lemlist</strong> <span>— body text not captured · may be a warm lead</span>' },
       { text: '<strong>Qualify all reply contacts in Lemlist</strong> <span>— tag "Interested" systematically after each wave</span>' },
     ],
 
     kpiSnapshot: {
-      batchLabel: 'EU Political Parties · 3 Batches',
+      batchLabel: 'EU Political Parties — All Batches',
       batch: [
-        { label: 'Total Sent',                  val: '114 contacts',               color: '' },
-        { label: 'Total Delivered',             val: '80 (70.2%)',                  color: '#ef4444' },
-        { label: 'Reply Rate',                  val: '1.75% (2 replies)',           color: '#ef4444' },
-        { label: 'Positive Reply Rate',         val: '0% tagged in Lemlist',        color: '#ef4444' },
-        { label: 'Best — ECR Board Referral',   val: '4.3% reply · 34.8% bounce',  color: '#eab308' },
-        { label: 'Worst — PPE/PES Leadership',  val: '0% reply · 31.7% bounce',    color: '#ef4444' },
+        { label: 'Total Sent',                  val: '205 contacts (March: 114 · April: 91)', color: '' },
+        { label: 'March Delivered',             val: '80 (70.2%) — critically low',            color: '#ef4444' },
+        { label: 'April Delivered',             val: '81 (89.0%)',                             color: '#eab308' },
+        { label: 'Reply Rate',                  val: '1.5% (3 replies: 2 March · 1 April)',   color: '#ef4444' },
+        { label: 'Best — ECR Board Referral',   val: '4.3% reply · 34.8% bounce',             color: '#eab308' },
+        { label: 'Worst — PPE/PES Leadership',  val: '0% reply · 31.7% bounce',               color: '#ef4444' },
       ],
       global: [
-        { label: 'Total contacts (global)',   val: '257 sent · 206 delivered (80.2%)',           color: '' },
-        { label: 'Global reply rate',         val: '3.5% (9 replies)',                           color: '#eab308' },
-        { label: 'Positive replies (global)', val: '0% marked in Lemlist',                      color: '#ef4444' },
-        { label: 'Critical risk',             val: 'EU bounce 30.8% — sender reputation at risk', color: '#ef4444' },
-        { label: 'Action required',           val: 'Pause EU · fix templates · re-enrich list', color: '#ef4444' },
+        { label: 'Total contacts (global)',   val: '205 sent · avg 20.4% bounce rate',              color: '' },
+        { label: 'Global reply rate',         val: '1.5% (3 replies)',                              color: '#ef4444' },
+        { label: 'Positive replies (global)', val: '0% marked in Lemlist',                         color: '#ef4444' },
+        { label: 'Critical risk',             val: 'EU bounce avg 20.4% — sender reputation at risk', color: '#ef4444' },
+        { label: 'Action required',           val: 'Pause EU · fix templates · re-enrich list',    color: '#ef4444' },
       ],
     },
 
     sidebarBadges: [
-      { text: '30.8% bounce', cls: 'cb-red' },
-      { text: 'Wrong sender', cls: 'cb-red' },
-      { text: 'Pause EU now', cls: 'cb-red' },
+      { text: '20% bounce',  cls: 'cb-red' },
+      { text: 'Audit EU list', cls: 'cb-red' },
+      { text: 'Pause EU',    cls: 'cb-red' },
     ],
   },
+
+
 
   {
     id: 'CAM-004',
@@ -1169,292 +965,62 @@ const CAMPAIGNS = [
 
   {
     id: 'CAM-003',
-    batch: 'Batch 2',
+    batch: 'France P27 — Batch 1 & 2',
     region: 'P27 France',
-    week: 'March 21–27, 2026',
-    tone: 'N/A — Zero engagement, language barrier suspected',
-
-    kpis: [
-      { label: 'Campaigns analyzed',  value: '3',    sub: '3 ICP segments · France P27',                       color: '#a5a0ff' },
-      { label: 'Contacts reached',    value: '118',  sub: 'All 3 segments combined',                            color: '#60d9fa' },
-      { label: 'Messages sent',       value: '222',  sub: 'Multi-step sequence',                                color: '#c4b5fd' },
-      { label: 'Reply Rate',          value: '0%',   sub: 'Full market failure — zero engagement',              color: '#ef4444' },
-      { label: 'Avg Bounce Rate',     value: '7.1%', sub: 'Best: 4.7% (Senior) · Worst: 9.6% (Grassroots)',    color: '#eab308' },
-      { label: 'Delivery Rate',       value: '90–95%', sub: 'High delivery but zero opens — language barrier', color: '#94a3b8' },
-    ],
-
-    segments: [
-      {
-        name: '⚠ Large National Directors', code: 'LND', contacts: '—',
-        delivLabel: '95.3% (4.7% bounce)', delivClass: 'tag-yellow',
-        replyRate: 0, replyMax: 9.6, replyColor: '#ef4444',
-        note: 'Best data quality · lowest bounce · zero replies — senior title, wrong channel for cold outbound',
-      },
-      {
-        name: '⚠ Grassroots Segments', code: 'GS', contacts: '—',
-        delivLabel: '⚠ 9.6% bounce', delivClass: 'tag-red',
-        replyRate: 0, replyMax: 9.6, replyColor: '#ef4444',
-        note: 'Worst list quality · 9.6% bounce · zero replies — domain reputation risk',
-      },
-    ],
-
-    takeaways: [
-      {
-        title: 'Full market failure — language barrier, not messaging',
-        body: 'Zero replies across all 3 segments despite 90–95% delivery rates and zero opens. This is a language/trust barrier, not a subject line problem.',
-      },
-      {
-        title: 'French-language sequences are required',
-        body: 'Sending English-language emails to French political organizations is structurally broken. Requires a full French-language reboot with a local sender identity.',
-      },
-      {
-        title: 'Data quality varies significantly by segment',
-        body: 'Senior targets (Large National Directors) show 4.7% bounce vs. 9.6% for grassroots segments — a 2× gap in list quality.',
-      },
-    ],
-
-    leads: [],
-
-    whatWorked: [
-      'High delivery rates (90–95%) — email infrastructure is not the bottleneck',
-      'Large National Directors segment has best data quality (4.7% bounce) — list worth keeping for French-language reboot',
-    ],
-
-    whatDidnt: [
-      { text: 'Zero replies across all 3 segments — full market failure (118 contacts, 222 messages)', level: 'red' },
-      { text: 'Zero opens — language/trust barrier prevents engagement before messaging is even evaluated', level: 'red' },
-      { text: 'Grassroots segments: 9.6% bounce — above acceptable threshold, domain reputation at risk', level: 'red' },
-      { text: 'English-language sequences sent to French-market organizations — structural mismatch', level: 'red' },
-    ],
-
-    nextActions: [
-      { text: '<strong>Pause France P27 email entirely</strong> <span>— reboot as French-language sequences with a local sender identity</span>', highlight: true },
-      { text: '<strong>Rebuild email list for grassroots segments</strong> <span>— 9.6% bounce requires full re-enrichment before next send</span>' },
-      { text: '<strong>Create French-language copy and sequences</strong> <span>— English approach is structurally broken for this market</span>' },
-    ],
-
-    kpiSnapshot: {
-      batchLabel: 'Batch 2',
-      batch: [
-        { label: 'Total Sent',        val: '222 msgs · 118 contacts',        color: '' },
-        { label: 'Reply Rate',        val: '0% — full market failure',       color: '#ef4444' },
-        { label: 'Avg Bounce',        val: '7.1%',                           color: '#eab308' },
-        { label: 'Best bounce',       val: '4.7% (Large Nat. Directors)',    color: '#eab308' },
-        { label: 'Worst bounce',      val: '9.6% (Grassroots segments)',     color: '#ef4444' },
-        { label: 'Delivery rate',     val: '90–95% — not the bottleneck',    color: '#94a3b8' },
-      ],
-      global: [
-        { label: 'Total contacts reached',   val: '118',                                      color: '' },
-        { label: 'Overall reply rate',       val: '0%',                                       color: '#ef4444' },
-        { label: 'Highest bounce observed',  val: '9.6% (Grassroots segments)',               color: '#ef4444' },
-        { label: 'Leads identified',         val: '0',                                        color: '#94a3b8' },
-        { label: 'Root cause',               val: 'Language barrier — French market',         color: '#eab308' },
-      ],
-    },
-
-    sidebarBadges: [
-      { text: '0% reply',      cls: 'cb-red' },
-      { text: 'Lang. barrier', cls: 'cb-red' },
-      { text: 'Pause & reboot', cls: 'cb-yellow' },
-    ],
-  },
-
-  {
-    id: 'CAM-005',
-    batch: 'Batch 1&2',
-    region: 'Noram & Europe Nordics',
-    week: 'March 18–24, 2026',
-    tone: 'CLC Event Hook',
-
-    kpis: [
-      { label: 'Campaigns analyzed',  value: '4',    sub: 'Noram Batch 1&2 + Nordics Email + LinkedIn', color: '#a5a0ff' },
-      { label: 'Contacts reached',    value: '209',  sub: 'Noram: 132 · Europe Nordics: 77',            color: '#60d9fa' },
-      { label: 'Messages sent',       value: '245+', sub: 'Noram tracked · Europe multi-channel',        color: '#c4b5fd' },
-      { label: 'Overall Reply Rate',  value: '6.2%', sub: '13 replies · Noram only (Europe: 0%)',        color: '#22c55e' },
-      { label: 'Positive Reply Rate', value: '1.9%', sub: '4 positives · Comms ICP only',                color: '#eab308' },
-      { label: 'Highest Bounce',      value: '9.3%', sub: 'Nordics email — above threshold',             color: '#ef4444' },
-    ],
-
-    segments: [
-      {
-        name: '✅ Communications', code: 'COMMS', contacts: '—',
-        delivLabel: '~96.7%',         delivClass: 'tag-green',
-        replyRate: 7.4, replyMax: 9.3, replyColor: '#22c55e',
-        note: 'Best Noram ICP · event hook resonates with Comms roles',
-      },
-      {
-        name: 'Campaign & Program Mgmt', code: 'CPM', contacts: '—',
-        delivLabel: '~93.5%',         delivClass: 'tag-yellow',
-        replyRate: 3.2, replyMax: 9.3, replyColor: '#eab308',
-        note: '0% positive reply · event hook angle doesn\'t land for this persona',
-      },
-      {
-        name: '⚠ Nordics Email', code: 'NE', contacts: '52',
-        delivLabel: '⚠ 9.3% bounce', delivClass: 'tag-red',
-        replyRate: 0,   replyMax: 9.3, replyColor: '#ef4444',
-        note: 'Stalled · highest bounce across all campaigns · re-enrich before resuming',
-      },
-      {
-        name: '⚠ Nordics LinkedIn', code: 'NLI', contacts: '25',
-        delivLabel: '4.5% connected', delivClass: 'tag-red',
-        replyRate: 0,   replyMax: 9.3, replyColor: '#ef4444',
-        note: '1 connection accepted · ~0 messages delivered · push invites first',
-      },
-    ],
-
-    takeaways: [
-      {
-        title: 'CLC event hook = reply volume, not pipeline',
-        body: 'The hook generates responses but 11/13 replies were "I won\'t be attending." It surfaces contacts — it does not create meetings.',
-      },
-      {
-        title: 'Communications roles outperform Campaign/Program Mgmt',
-        body: '7.4% vs 3.2% reply rate. Comms roles are naturally more responsive to event-based social outreach.',
-      },
-      {
-        title: 'ICP contamination is significant in Noram',
-        body: 'List includes employer associations (BCMEA), non-CLC affiliates (SFPQ), and tourism HR orgs. At least 3–4 of 13 respondents were wrong-fit by design.',
-      },
-      {
-        title: 'Europe/Nordics is blocked at deliverability',
-        body: '9.3% email bounce (highest across all campaigns) + LinkedIn barely launched (1 connection accepted out of 25). Batch is effectively stalled.',
-      },
-      {
-        title: 'Organic referrals signal the pitch has legs',
-        body: '2 replies generated internal referrals (CMAW → organizer, CEA → membership lead). The angle works — but is often hitting the wrong person.',
-      },
-    ],
-
-    leads: [
-      {
-        name: 'Shipa Das',
-        org: 'Warm Lead · Open to Zoom Call',
-        orgColor: '#22c55e',
-        dotColor: '#22c55e',
-        borderColor: 'rgba(34,197,94,.35)',
-        note: 'Expressed interest in a Zoom call.',
-        cta: 'Follow up now.',
-        ctaColor: '#22c55e',
-      },
-      {
-        name: 'Austin Pasemco',
-        org: 'CMAW · Organic Referral',
-        orgColor: '#c4b5fd',
-        dotColor: '#6c63ff',
-        borderColor: 'rgba(108,99,255,.35)',
-        note: 'Referred internally by a CMAW contact — warm entry point into the organization.',
-        cta: 'Follow up now.',
-        ctaColor: '#a5a0ff',
-      },
-      {
-        name: 'Amanda Evans',
-        org: 'CEA · Organic Referral',
-        orgColor: '#c4b5fd',
-        dotColor: '#6c63ff',
-        borderColor: 'rgba(108,99,255,.35)',
-        note: 'Referred as membership lead by a CEA contact — validates the pitch has internal traction.',
-        cta: '',
-        ctaColor: '',
-      },
-    ],
-
-    whatWorked: [
-      'Event hook gets responses from Comms-role leads (7.4% reply rate)',
-      '2 organic referrals generated: Austin Pasemco (CMAW) and Amanda Evans (CEA)',
-      '1 warm lead open to a Zoom call (Shipa Das)',
-      'Competitive intel surfaced: BC Fed of Labour recently migrated to Action Network',
-    ],
-
-    whatDidnt: [
-      { text: 'Event hook fails when contacts aren\'t attending the CLC — majority reply = "not going to Winnipeg"', level: 'red' },
-      { text: 'ICP list quality: employer orgs, tourism HR, non-CLC unions included in Noram list', level: 'red' },
-      { text: 'Step 2 follow-up generates flat declines — no uplift on the sequence', level: 'yellow' },
-      { text: 'Europe email deliverability: 9.3% bounce on Nordics — above acceptable threshold', level: 'red' },
-      { text: 'LinkedIn barely launched — 1 connection accepted out of 25, ~0 messages actually delivered', level: 'red' },
-      { text: 'Campaign & Program Mgmt ICP: 3.2% reply, 0% positive — angle doesn\'t land for this persona', level: 'yellow' },
-    ],
-
-    nextActions: [
-      { text: '<strong>Follow up on warm contacts now:</strong> <span>Shipa Das (Zoom), Rob Cottingham (Vancouver), Austin Pasemco (CMAW), Amanda Evans (CEA)</span>', highlight: true },
-      { text: '<strong>Scrub Noram list</strong> <span>— remove employer associations, non-CLC unions, duplicate org contacts before next batch</span>' },
-      { text: '<strong>Pivot messaging for non-attendees</strong> <span>— test a value-first angle decoupled from the CLC event hook</span>' },
-      { text: '<strong>Pause Europe/Nordics email</strong> <span>— re-enrich list before resuming (9.3% bounce is above acceptable threshold)</span>' },
-      { text: '<strong>Push LinkedIn connections for Europe</strong> <span>— get more invites accepted before attempting to message</span>' },
-    ],
-
-    kpiSnapshot: {
-      batchLabel: 'Noram Batch 1&2',
-      batch: [
-        { label: 'Total Sent',                  val: '245 msgs · 132 prospects',                   color: '' },
-        { label: 'Best — Comms',                val: '7.4% reply · 6.2% positive · 3.3% bounce',  color: '#22c55e' },
-        { label: 'Worst — Campaign Mgmt',       val: '3.2% reply · 0% positive · 6.5% bounce',    color: '#ef4444' },
-        { label: 'Avg Reply Rate',              val: '5.3%',                                       color: '#22c55e' },
-        { label: 'Avg Bounce',                  val: '5%',                                         color: '#eab308' },
-        { label: 'Nordics Email (CAM-004)',      val: '52 prospects · 0% reply · 9.3% bounce',     color: '#ef4444' },
-        { label: 'Nordics LinkedIn (CAM-004)',   val: '25 prospects · 4.5% connection · 0% reply', color: '#ef4444' },
-      ],
-      global: [
-        { label: 'Total contacts reached',   val: '209',                        color: '' },
-        { label: 'Overall reply rate',        val: '6.2% (contacts)',            color: '#22c55e' },
-        { label: 'Positive reply rate',       val: '1.9%',                       color: '#eab308' },
-        { label: 'Highest bounce observed',   val: '9.3% (Nordics email)',       color: '#ef4444' },
-        { label: 'Leads identified',          val: '3 (1 warm + 2 referrals)',   color: '#22c55e' },
-      ],
-    },
-
-    sidebarBadges: [
-      { text: 'Comms: 7.4%',     cls: 'cb-green' },
-      { text: '2 referrals',     cls: 'cb-green' },
-      { text: 'Nordics stalled', cls: 'cb-red' },
-    ],
-  },
-
-  {
-    id: 'CAM-003',
-    batch: 'Batch 1',
-    region: 'P27 France',
-    week: 'March 14–20, 2026',
+    week: 'March 14–27, 2026',
     tone: 'Présidentielles 2027 / Mobilization Strategy',
 
     kpis: [
-      { label: 'Campaigns analyzed', value: '5',    sub: 'Batch 1 only',                   color: '#a5a0ff' },
-      { label: 'Contacts reached',   value: '188',  sub: 'Segments A, B, C, D, F',         color: '#60d9fa' },
-      { label: 'Messages sent',      value: '~360', sub: 'Steps 1 + 2 (follow-ups)',        color: '#c4b5fd' },
-      { label: 'Avg Reply Rate',     value: '3.8%', sub: 'by message · 7.4% by contact',   color: '#22c55e' },
-      { label: 'Best Reply Rate',    value: '9.5%', sub: 'Network/Movement (C)',            color: '#22c55e' },
-      { label: 'Avg Bounce',         value: '2.3%', sub: 'Peak: 8.2% on Others (F)',       color: '#eab308' },
+      { label: 'Batches analyzed',  value: '2',     sub: 'Batch 1 (5 segments) · Batch 2 (2 segments)',         color: '#a5a0ff' },
+      { label: 'Contacts reached',  value: '306',   sub: 'Batch 1: 188 · Batch 2: 118',                         color: '#60d9fa' },
+      { label: 'Avg Reply Rate',    value: '2.3%',  sub: 'Batch 1: 3.8% · Batch 2: 0%',                         color: '#22c55e' },
+      { label: 'Best Segment',      value: '9.5%',  sub: 'Network/Movement (C) — Batch 1',                      color: '#22c55e' },
+      { label: 'Language Barrier',  value: 'B2: 0%', sub: 'Full market failure — French sequences required',    color: '#ef4444' },
+      { label: 'Avg Bounce',        value: '4.8%',  sub: 'Batch 1: 2.3% · Batch 2: 7.1%',                       color: '#eab308' },
     ],
 
     segments: [
       {
-        name: '🔥 Network/Movement', code: 'C', contacts: '—',
-        delivLabel: '100%',       delivClass: 'tag-green',
+        name: '🔥 Network/Movement',         code: 'C',   contacts: '—',
+        delivLabel: '100%',                   delivClass: 'tag-green',
         replyRate: 9.5, replyMax: 9.5, replyColor: '#22c55e',
         note: 'Priority ICP · maximum fit with 2027 mobilization framing',
       },
       {
-        name: 'Think Tank', code: 'D', contacts: '24',
-        delivLabel: '100%',       delivClass: 'tag-green',
+        name: 'Think Tank',                   code: 'D',   contacts: '24',
+        delivLabel: '100%',                   delivClass: 'tag-green',
         replyRate: 4.2, replyMax: 9.5, replyColor: '#eab308',
         note: 'Small volume · needs more analytical angle',
       },
       {
-        name: 'Large Nat Exec', code: 'A', contacts: '—',
-        delivLabel: '~98%',       delivClass: 'tag-yellow',
+        name: 'Large Nat Exec',               code: 'A',   contacts: '—',
+        delivLabel: '~98%',                   delivClass: 'tag-yellow',
         replyRate: 2.7, replyMax: 9.5, replyColor: '#94a3b8',
         note: 'Average performance · on trend',
       },
       {
-        name: 'Others', code: 'F', contacts: '—',
-        delivLabel: '⚠ 8.2% bounce', delivClass: 'tag-red',
+        name: 'Others',                        code: 'F',   contacts: '—',
+        delivLabel: '⚠ 8.2% bounce',          delivClass: 'tag-red',
         replyRate: 2.7, replyMax: 9.5, replyColor: '#94a3b8',
         note: 'Poor list quality · clean before next send',
       },
       {
-        name: 'National Directors', code: 'B', contacts: '45',
-        delivLabel: '—',           delivClass: 'tag-gray',
+        name: 'National Directors',            code: 'B',   contacts: '45',
+        delivLabel: '—',                       delivClass: 'tag-gray',
         replyRate: 0,   replyMax: 9.5, replyColor: '#ef4444',
         note: 'Complete failure · title too senior · switch to LinkedIn',
+      },
+      {
+        name: 'Large National Directors B2',   code: 'LND', contacts: '—',
+        delivLabel: '95.3% (4.7% bounce)',     delivClass: 'tag-yellow',
+        replyRate: 0,   replyMax: 9.5, replyColor: '#ef4444',
+        note: 'Best data quality in Batch 2 · lowest bounce · zero replies — senior title, wrong channel for cold outbound',
+      },
+      {
+        name: 'Grassroots Segments B2',        code: 'GS',  contacts: '—',
+        delivLabel: '⚠ 9.6% bounce',           delivClass: 'tag-red',
+        replyRate: 0,   replyMax: 9.5, replyColor: '#ef4444',
+        note: 'Worst list quality · 9.6% bounce · zero replies — domain reputation risk',
       },
     ],
 
@@ -1478,6 +1044,14 @@ const CAMPAIGNS = [
       {
         title: 'Internal contacts pollute metrics',
         body: '2 Qomon contacts (layla@, jason@...) were included in Campaign C. Exclude them systematically before launch.',
+      },
+      {
+        title: 'Batch 2: Full market failure — language barrier, not messaging',
+        body: 'Zero replies across all Batch 2 segments despite 90–95% delivery rates and zero opens. This is a language/trust barrier, not a subject line problem.',
+      },
+      {
+        title: 'French-language sequences are required',
+        body: 'Sending English-language emails to French political organizations is structurally broken. Requires a full French-language reboot with a local sender identity.',
       },
     ],
 
@@ -1509,49 +1083,59 @@ const CAMPAIGNS = [
       'Think Tank: perfect deliverability + solid engagement — segment to keep',
       'Step 2 (follow-ups) drives the majority of replies — multi-touch sequence validated',
       '1 hot lead (Benoit Granier) + 1 warm reconnection (Laurence Lepetit) generated',
+      'High delivery rates in Batch 2 (90–95%) — email infrastructure is not the bottleneck',
+      'Large National Directors segment has best data quality (4.7% bounce) — list worth keeping for French-language reboot',
     ],
 
     whatDidnt: [
       { text: 'Campaign B (Directors): 0% reply — senior national directors don\'t engage via cold outbound', level: 'red' },
       { text: 'Segment "Others": 8.2% bounce — direct impact on domain reputation', level: 'red' },
-      { text: 'Zero clicks across all 5 campaigns — CTA is not actionable or perceived value is too low', level: 'red' },
+      { text: 'Zero clicks across all 5 campaigns in Batch 1 — CTA is not actionable or perceived value is too low', level: 'red' },
       { text: 'No contacts tagged "Interested" in Lemlist despite real signals — manual qualification missing', level: 'yellow' },
+      { text: 'Batch 2: Zero replies across all segments — full market failure (118 contacts, 222 messages)', level: 'red' },
+      { text: 'Batch 2: Zero opens — language/trust barrier prevents engagement before messaging is even evaluated', level: 'red' },
+      { text: 'Batch 2 Grassroots: 9.6% bounce — above acceptable threshold, domain reputation at risk', level: 'red' },
+      { text: 'English-language sequences sent to French-market organizations — structural mismatch', level: 'red' },
     ],
 
     nextActions: [
       { text: '<strong>Follow up Benoit Granier</strong> <span>(Réseau Action Climat) — clear intent signal, contact today</span>', highlight: true },
+      { text: '<strong>Pause France P27 email entirely</strong> <span>— reboot as French-language sequences with a local sender identity</span>' },
       { text: '<strong>Exclude internal Qomon contacts</strong> <span>from all lists before next batch</span>' },
-      { text: '<strong>Double down on Network/Movement + Think Tank</strong> <span>for Batch 2 — most receptive ICPs</span>' },
+      { text: '<strong>Double down on Network/Movement + Think Tank</strong> <span>for next batch — most receptive ICPs</span>' },
       { text: '<strong>Rebuild the "Others" list</strong> <span>with stricter enrichment criteria</span>' },
+      { text: '<strong>Rebuild email list for grassroots segments</strong> <span>— 9.6% bounce requires full re-enrichment before next send</span>' },
       { text: '<strong>Redesign Campaign B (Directors)</strong> <span>— test LinkedIn or case study / social proof angle</span>' },
       { text: '<strong>Tag "Interested" replies in Lemlist</strong> <span>for a reliable positive reply rate</span>' },
     ],
 
     kpiSnapshot: {
-      batchLabel: 'Batch 1',
+      batchLabel: 'France P27 — Batch 1 & 2',
       batch: [
-        { label: 'Total Sent',              val: '188 contacts · ~360 messages', color: '' },
-        { label: 'Avg Reply Rate',          val: '3.8% (msg) · 7.4% (contacts)', color: '#22c55e' },
-        { label: 'Avg Positive Reply Rate', val: '0% tagged in Lemlist',         color: '#94a3b8' },
-        { label: 'Avg Bounce',              val: '2.3%',                          color: '#eab308' },
-        { label: 'Best',                    val: 'C → 9.5% reply, 0% bounce',    color: '#22c55e' },
-        { label: 'Worst',                   val: 'B → 0% reply, 4.5% bounce',    color: '#ef4444' },
+        { label: 'Total Sent',              val: '306 contacts (B1: 188 · B2: 118)', color: '' },
+        { label: 'Avg Reply Rate',          val: 'Batch 1: 3.8% · Batch 2: 0%',     color: '#22c55e' },
+        { label: 'Avg Positive Reply Rate', val: '0% tagged in Lemlist',             color: '#94a3b8' },
+        { label: 'Avg Bounce',              val: 'Batch 1: 2.3% · Batch 2: 7.1%',   color: '#eab308' },
+        { label: 'Best',                    val: 'C → 9.5% reply, 0% bounce (B1)',   color: '#22c55e' },
+        { label: 'Worst B2',                val: 'GS → 0% reply, 9.6% bounce',       color: '#ef4444' },
       ],
       global: [
-        { label: 'Total contacts reached',   val: '188',                                       color: '' },
-        { label: 'Avg reply rate',            val: '3.8%',                                      color: '#22c55e' },
-        { label: 'Highest bounce observed',   val: '8.2% (Others/F)',                           color: '#ef4444' },
-        { label: 'Tagged positive reply rate',val: '0% — behavioral signals unqualified',       color: '#94a3b8' },
-        { label: 'Manually identified leads', val: '2 (1 hot · 1 warm)',                        color: '#22c55e' },
+        { label: 'Total contacts reached',   val: '306 (Batch 1: 188 · Batch 2: 118)',         color: '' },
+        { label: 'Avg reply rate',            val: 'Batch 1: 3.8% · Batch 2: 0%',              color: '#22c55e' },
+        { label: 'Highest bounce observed',   val: '9.6% (Batch 2 Grassroots)',                color: '#ef4444' },
+        { label: 'Tagged positive reply rate',val: '0% — behavioral signals unqualified',      color: '#94a3b8' },
+        { label: 'Manually identified leads', val: '2 (1 hot · 1 warm) — Batch 1 only',       color: '#22c55e' },
       ],
     },
 
     sidebarBadges: [
-      { text: 'Best: 9.5%', cls: 'cb-green' },
-      { text: '0% bounce C', cls: 'cb-green' },
-      { text: 'B: 0 replies', cls: 'cb-red' },
+      { text: 'C: 9.5%',         cls: 'cb-green' },
+      { text: 'B2: lang barrier', cls: 'cb-red' },
+      { text: 'B: 0 replies',    cls: 'cb-red' },
     ],
   },
+
+
 
   // ── ADD NEW CAMPAIGNS HERE (copy the object above) ──────────────
   // {
