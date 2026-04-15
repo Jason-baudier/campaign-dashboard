@@ -188,6 +188,530 @@
 // ═══════════════════════════════════════════════════════════════════
 const CAMPAIGNS = [
   {
+    id: 'CAM-010',
+    batch: 'Tap to Give · EU Non-Profits · A/B Test',
+    region: 'Europe — EU',
+    week: 'April 14, 2026',
+    tone: 'Tap to Give Initiative Hook',
+
+    kpis: [
+      { label: 'Contacts reached',    value: '21',    sub: 'LinkedIn · single batch · Henry Mackintosh sender',      color: '#60d9fa' },
+      { label: 'Delivered',           value: '21',    sub: '100% delivery rate — zero bounces',                      color: '#22c55e' },
+      { label: 'Click Rate',          value: '47.6%', sub: '10 clicks — exceptional engagement signal',              color: '#22c55e' },
+      { label: 'Reply Rate',          value: '19.0%', sub: '4 replies — top LinkedIn performer this week',           color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                   color: '#ef4444' },
+      { label: 'Bounce Rate',         value: '0.0%',  sub: 'Clean EU LinkedIn list — no deliverability issues',      color: '#22c55e' },
+    ],
+
+    segments: [
+      {
+        name: '✅ EU Non-Profits A/B Test', code: 'TAP-EU', contacts: '21',
+        delivLabel: '100% delivered',       delivClass: 'tag-green',
+        replyRate: 19.0, replyMax: 19.0, replyColor: '#22c55e',
+        note: 'Best LinkedIn performer this week · 47.6% click rate · sender name bug on 1 reply (Harry vs Henry)',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: '19.0% reply rate — top LinkedIn performer this week',
+        body: '4 replies from 21 contacts. Combined with 47.6% click rate, this is the strongest engagement signal across all April 14 campaigns. The Tap to Give hook resonates with EU non-profit audience.',
+      },
+      {
+        title: '47.6% click rate — exceptional content engagement',
+        body: '10 out of 21 contacts clicked. Highest click rate observed across all campaigns to date. The LinkedIn message content and CTA are working well for this ICP.',
+      },
+      {
+        title: 'Sender name bug: lead received "Harry" instead of "Henry"',
+        body: 'Anita Sunder Rajan addressed the sender as "Harry" — the template {{firstName}} or sender name variable is pulling incorrectly. Review Henry Mackintosh\'s LinkedIn sequence template before next batch.',
+      },
+      {
+        title: 'Chad Maskell: confirmed long-term nurture opportunity',
+        body: '"We don\'t yet do field-based fundraising but will do eventually for a number of our charities." Clear future fit — add to long-term nurture list or flag for a 3–6 month follow-up.',
+      },
+      {
+        title: '0 leads qualified in Lemlist despite strong engagement',
+        body: 'All 4 sequences auto-stopped on reply but no one was tagged Interested. Manual qualification required to make this pipeline visible.',
+      },
+    ],
+
+    leads: [
+      {
+        name: 'Chad Maskell',
+        org: 'EU Non-Profit · Long-Term Fit',
+        orgColor: '#eab308',
+        dotColor: '#eab308',
+        borderColor: 'rgba(234,179,8,.35)',
+        note: '"We don\'t yet do field-based fundraising but will do eventually for a number of our charities." Future fit confirmed.',
+        cta: 'Add to long-term nurture · follow up in 3–6 months.',
+        ctaColor: '#eab308',
+      },
+    ],
+
+    whatWorked: [
+      'Tap to Give hook resonates with EU non-profit audience — 19% reply + 47.6% click',
+      'LinkedIn channel: 100% delivery, zero bounces — cleanest list this week',
+      'Strong click rate confirms high content relevance for this ICP',
+    ],
+
+    whatDidnt: [
+      { text: 'Sender name bug: Anita Sunder Rajan received "Harry" instead of "Henry" — template variable error', level: 'red' },
+      { text: '0 positive replies tagged in Lemlist — manual qualification step missing', level: 'yellow' },
+      { text: 'Claudia Lotzwig not a fit for current organisations — ICP targeting can be refined further', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Fix sender name variable in LinkedIn template</strong> <span>— "Harry" instead of "Henry Mackintosh" · audit sequence before next batch</span>', highlight: true },
+      { text: '<strong>Nurture Chad Maskell long-term</strong> <span>— confirmed future fit · add to nurture list · follow up in 3–6 months</span>' },
+      { text: '<strong>Qualify all 4 replies in Lemlist</strong> <span>— tag Interested where applicable · pipeline is currently invisible</span>' },
+      { text: '<strong>Scale Tap to Give LinkedIn sequence</strong> <span>— 19% reply + 47.6% click justifies expanding to more EU non-profits</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Tap to Give · EU Non-Profits',
+      batch: [
+        { label: 'Total Sent',          val: '21 contacts',             color: '' },
+        { label: 'Total Delivered',     val: '21 (100%)',               color: '#22c55e' },
+        { label: 'Click Rate',          val: '47.6% (10 clicks)',       color: '#22c55e' },
+        { label: 'Reply Rate',          val: '19.0% (4 replies)',       color: '#22c55e' },
+        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',    color: '#ef4444' },
+        { label: 'Bounce Rate',         val: '0.0% — clean list',       color: '#22c55e' },
+      ],
+      global: [
+        { label: 'Total Sent (all 8 campaigns)',  val: '468 · 448 delivered (4.3% bounce)', color: '' },
+        { label: 'Global Reply Rate',             val: '7.9% (37 replies)',                 color: '#eab308' },
+        { label: 'Positive Replies (global)',     val: '0 — leadsInterested = 0',           color: '#ef4444' },
+        { label: 'LinkedIn vs Email (CAM-005)',   val: '14.4% vs 1.0% — LinkedIn wins',     color: '#22c55e' },
+        { label: 'Action required',               val: 'Fix sender bug · qualify replies',  color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '19% reply',    cls: 'cb-green' },
+      { text: '47.6% click',  cls: 'cb-green' },
+      { text: 'Sender bug',   cls: 'cb-yellow' },
+    ],
+  },
+
+  {
+    id: 'CAM-005',
+    batch: 'CLC Outreach · 4 Batches',
+    region: 'Canada — CLC',
+    week: 'April 14, 2026',
+    tone: 'CLC Congress Event Hook',
+
+    kpis: [
+      { label: 'Batches analyzed',    value: '4',     sub: 'LI Campaign Mgmt · LI Communications · Email Leadership · Email Ops & Admin', color: '#a5a0ff' },
+      { label: 'Contacts reached',    value: '195',   sub: 'Total sent across all 4 batches',                                             color: '#60d9fa' },
+      { label: 'Delivered',           value: '192',   sub: '98.5% delivery rate',                                                         color: '#22c55e' },
+      { label: 'Reply Rate',          value: '7.2%',  sub: '14 replies — LinkedIn dominant (13 of 14)',                                   color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                                        color: '#ef4444' },
+      { label: 'Email Bounce Rate',   value: '6.8%',  sub: 'Email Ops & Admin only · LinkedIn 0% bounce',                                color: '#eab308' },
+    ],
+
+    segments: [
+      {
+        name: '✅ LI Campaign & Program Mgmt', code: 'LI-CPM', contacts: '44',
+        delivLabel: '100% delivered',          delivClass: 'tag-green',
+        replyRate: 18.2, replyMax: 18.2, replyColor: '#22c55e',
+        note: 'Best performer · 8 replies · Congress hook resonates with Campaign Mgmt profiles',
+      },
+      {
+        name: 'LI Communications B1&2',        code: 'LI-COM', contacts: '46',
+        delivLabel: '100% delivered',          delivClass: 'tag-green',
+        replyRate: 10.9, replyMax: 18.2, replyColor: '#22c55e',
+        note: '5 replies · 2 soft-interest profiles (Toronto coffee, virtual connection)',
+      },
+      {
+        name: '⚠ Email Leadership B1&2',       code: 'EM-LDR', contacts: '61',
+        delivLabel: '100% delivered',          delivClass: 'tag-yellow',
+        replyRate: 1.6, replyMax: 18.2, replyColor: '#eab308',
+        note: '1 reply only · email underperforms vs LinkedIn for same ICP',
+      },
+      {
+        name: '⚠ Email Ops & Admin B1&2',      code: 'EM-OPS', contacts: '44',
+        delivLabel: '⚠ 6.8% bounce',          delivClass: 'tag-red',
+        replyRate: 0, replyMax: 18.2, replyColor: '#ef4444',
+        note: '0% reply · 6.8% bounce · worst segment · list refresh needed',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'LinkedIn dominates email for CLC audience (14.4% vs 1.0%)',
+        body: 'LinkedIn batches: 90 sent → 13 replies (14.4%). Email batches: 105 sent → 1 reply (1.0%). For the CLC ICP, LinkedIn is clearly the right channel. Consider reallocating effort away from email.',
+      },
+      {
+        title: 'LinkedIn Campaign Mgmt: 18.2% reply — top segment this batch',
+        body: '8 replies from 44 contacts with 0% bounce. The Congress event hook lands well with Campaign & Program Management profiles. Scale this segment.',
+      },
+      {
+        title: 'Majority of replies are declines — hook surfaces contacts, not pipeline',
+        body: 'Most replies confirm non-attendance at CLC Congress. The hook creates engagement but qualifies out the majority. Need a pivot angle for non-attendees.',
+      },
+      {
+        title: 'Maxwell Kristen: ambiguous reply worth pursuing',
+        body: '"Hey Joshua, sure thing" — potentially positive. Sequence auto-stopped. Worth a manual follow-up to clarify intent.',
+      },
+      {
+        title: '0 contacts tagged Interested in Lemlist across all 4 batches',
+        body: 'Despite 14 replies, no one was manually qualified. The pipeline is invisible until qualification is done systematically after each wave.',
+      },
+    ],
+
+    leads: [
+      {
+        name: 'Maxwell Kristen',
+        org: 'CLC · Ambiguous Positive',
+        orgColor: '#eab308',
+        dotColor: '#eab308',
+        borderColor: 'rgba(234,179,8,.35)',
+        note: '"Hey Joshua, sure thing" — ambiguous but potentially positive. Sequence auto-stopped.',
+        cta: 'Follow up manually to clarify intent.',
+        ctaColor: '#eab308',
+      },
+      {
+        name: 'Aynsley Lawr',
+        org: 'CLC Comms · Soft Interest',
+        orgColor: '#a5a0ff',
+        dotColor: '#6c63ff',
+        borderColor: 'rgba(108,99,255,.35)',
+        note: '"Won\'t be in Winnipeg but would love to grab a coffee in Toronto" — not attending but open to connection.',
+        cta: 'Route to Joshua for personal follow-up.',
+        ctaColor: '#a5a0ff',
+      },
+      {
+        name: 'Chaimaa Moukhlisse',
+        org: 'CLC Comms · Soft Interest',
+        orgColor: '#a5a0ff',
+        dotColor: '#6c63ff',
+        borderColor: 'rgba(108,99,255,.35)',
+        note: '"Won\'t attend Congress but open to connecting virtually" — expressed openness without attending.',
+        cta: 'Route to Joshua for personal follow-up.',
+        ctaColor: '#a5a0ff',
+      },
+    ],
+
+    whatWorked: [
+      'LinkedIn Campaign Mgmt: 18.2% reply — event hook resonates with this profile',
+      'LinkedIn Communications: 10.9% reply + 2 soft-interest leads worth pursuing',
+      'LinkedIn overall: 14.4% reply rate vs 1.0% for email on the same ICP',
+      '0% bounce on all LinkedIn batches — clean contact data',
+    ],
+
+    whatDidnt: [
+      { text: 'Email Ops & Admin: 0% reply + 6.8% bounce — worst segment, list refresh required', level: 'red' },
+      { text: 'Email Leadership: 1 reply from 61 contacts (1.6%) — hook does not land via email for this ICP', level: 'red' },
+      { text: 'Congress event hook produces mostly declines — not generating meetings, only surfacing non-attendees', level: 'yellow' },
+      { text: '0 leads tagged Interested in Lemlist — manual qualification step missing', level: 'yellow' },
+      { text: 'Lance Hiltz (no longer at teachers federation) included in list — ICP data quality issue', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Follow up Maxwell Kristen</strong> <span>— ambiguous positive reply · sequence auto-stopped · manual outreach to clarify intent</span>', highlight: true },
+      { text: '<strong>Route Aynsley Lawr + Chaimaa Moukhlisse to Joshua</strong> <span>— soft-interest profiles open to connect · personal follow-up needed</span>' },
+      { text: '<strong>Remove Lance Hiltz from CLC list</strong> <span>— no longer at teachers federation · update CRM/Clay record</span>' },
+      { text: '<strong>Reallocate effort from email to LinkedIn for CLC</strong> <span>— 14.4% vs 1.0% reply rate is a decisive channel advantage</span>' },
+      { text: '<strong>Qualify all replies in Lemlist</strong> <span>— tag Interested systematically after each wave</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'CLC Outreach · 4 Batches',
+      batch: [
+        { label: 'Total Sent',                val: '195 contacts',             color: '' },
+        { label: 'Total Delivered',           val: '192 (98.5%)',              color: '#22c55e' },
+        { label: 'Reply Rate',                val: '7.2% (14 replies)',        color: '#22c55e' },
+        { label: 'Positive Reply Rate',       val: '0% tagged in Lemlist',     color: '#ef4444' },
+        { label: 'Best — LI Campaign Mgmt',   val: '18.2% reply · 0% bounce', color: '#22c55e' },
+        { label: 'Worst — Email Ops & Admin', val: '0% reply · 6.8% bounce',  color: '#ef4444' },
+      ],
+      global: [
+        { label: 'Total Sent (all 8 campaigns)', val: '468 · 448 delivered (4.3% bounce)', color: '' },
+        { label: 'Global Reply Rate',            val: '7.9% (37 replies)',                 color: '#eab308' },
+        { label: 'LinkedIn vs Email (this ICP)', val: '14.4% vs 1.0% — LinkedIn wins',     color: '#22c55e' },
+        { label: 'Positive Replies (global)',    val: '0 — leadsInterested = 0',           color: '#ef4444' },
+        { label: 'Action required',              val: 'Qualify replies · pivot to LinkedIn', color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: 'LI: 18.2%',   cls: 'cb-green' },
+      { text: 'LI > Email',  cls: 'cb-green' },
+      { text: '6.8% bounce', cls: 'cb-yellow' },
+    ],
+  },
+
+  {
+    id: 'CAM-006',
+    batch: 'Netroots 2026 · Pre-Event Outreach',
+    region: 'USA',
+    week: 'April 14, 2026',
+    tone: 'Netroots Nation 2026 Pre-Event Hook',
+
+    kpis: [
+      { label: 'Contacts reached',    value: '125',   sub: 'Email · dual sender campaign',                      color: '#60d9fa' },
+      { label: 'Delivered',           value: '120',   sub: '96.0% delivery rate',                               color: '#22c55e' },
+      { label: 'Reply Rate',          value: '14.4%', sub: '18 replies — strongest email result this week',     color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested — manual review needed',  color: '#ef4444' },
+      { label: 'Bounce Rate',         value: '4.0%',  sub: '5 bounces — acceptable, worth monitoring',          color: '#eab308' },
+      { label: 'Senders',             value: '2',     sub: 'Helen Sabatine (15 replies) · Joshua Maxwell (3)',  color: '#a5a0ff' },
+    ],
+
+    segments: [
+      {
+        name: '✅ Helen Sabatine Sender', code: 'NET-HS', contacts: '~100',
+        delivLabel: '~96% delivered',    delivClass: 'tag-green',
+        replyRate: 15.0, replyMax: 15.0, replyColor: '#22c55e',
+        note: '15 replies — 5× more effective than Joshua sender · Netroots audience responds strongly to this identity',
+      },
+      {
+        name: 'Joshua Maxwell Sender',   code: 'NET-JM', contacts: '~25',
+        delivLabel: '~96% delivered',    delivClass: 'tag-yellow',
+        replyRate: 3.0, replyMax: 15.0, replyColor: '#eab308',
+        note: '3 replies — same hook · sender identity is a key variable for this audience',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: '14.4% reply rate — strongest email result across all April 14 campaigns',
+        body: '18 replies from 125 contacts. The Netroots pre-event hook is highly effective for this audience, making CAM-006 the best-performing email campaign this week.',
+      },
+      {
+        title: 'Helen Sabatine generates 5× more replies than Joshua Maxwell',
+        body: '15 replies via Helen vs 3 via Joshua on the same hook. The Netroots audience has stronger affinity with Helen\'s sender identity. Consider making her the primary sender for future batches.',
+      },
+      {
+        title: 'Reply body text not available — manual Lemlist review required',
+        body: 'All 18 replies stopped automatically but email body content is stored server-side. The team must manually review replies in Lemlist to qualify leads — high volume suggests warm leads are present.',
+      },
+      {
+        title: '0 positive replies tagged despite high reply volume',
+        body: '18 replies with 0 tagged Interested. This is a qualification gap, not a performance issue. The pipeline is invisible without manual tagging.',
+      },
+      {
+        title: '4.0% bounce rate — acceptable but to monitor',
+        body: '5 bounces from 125 contacts. Not critical but should be tracked across batches to prevent sender reputation degradation.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      'Netroots pre-event hook generates strong email engagement — 14.4% reply rate',
+      'Helen Sabatine sender dramatically outperforms Joshua Maxwell (15 vs 3 replies)',
+      '96.0% delivery rate — clean contact list, minimal bounce risk',
+    ],
+
+    whatDidnt: [
+      { text: 'Reply body text not captured — 18 replies cannot be qualified without manual Lemlist review', level: 'red' },
+      { text: '0 positive replies tagged — pipeline invisible despite strong reply volume', level: 'red' },
+      { text: 'Joshua Maxwell sender underperforms vs Helen Sabatine — sender A/B test gap', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Manually review all 18 replies in Lemlist</strong> <span>— body text stored server-side · qualify and tag Interested · high volume suggests warm leads present</span>', highlight: true },
+      { text: '<strong>Make Helen Sabatine primary sender for next Netroots batch</strong> <span>— 5× more replies than Joshua · leverage this advantage</span>' },
+      { text: '<strong>Tag qualified replies as Interested in Lemlist</strong> <span>— 0% positive rate is a qualification gap, not a performance issue</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Netroots 2026 · Pre-Event',
+      batch: [
+        { label: 'Total Sent',          val: '125 contacts',                  color: '' },
+        { label: 'Total Delivered',     val: '120 (96.0%)',                   color: '#22c55e' },
+        { label: 'Reply Rate',          val: '14.4% (18 replies)',            color: '#22c55e' },
+        { label: 'Positive Reply Rate', val: '0% — review needed',            color: '#ef4444' },
+        { label: 'Helen Sabatine',      val: '15 replies (vs 3 via Joshua)',  color: '#22c55e' },
+        { label: 'Bounce Rate',         val: '4.0% (5 bounces)',              color: '#eab308' },
+      ],
+      global: [
+        { label: 'Total Sent (all 8 campaigns)',  val: '468 · 448 delivered (4.3% bounce)', color: '' },
+        { label: 'Global Reply Rate',             val: '7.9% (37 replies)',                 color: '#eab308' },
+        { label: 'Positive Replies (global)',     val: '0 — leadsInterested = 0',           color: '#ef4444' },
+        { label: 'Best email campaign this week', val: 'CAM-006 at 14.4% reply rate',       color: '#22c55e' },
+        { label: 'Action required',               val: 'Manual Lemlist review · qualify',   color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '14.4% reply',       cls: 'cb-green' },
+      { text: 'Helen: 15 replies', cls: 'cb-green' },
+      { text: 'Review Lemlist',    cls: 'cb-yellow' },
+    ],
+  },
+
+  {
+    id: 'CAM-007',
+    batch: 'America Votes · Batch 4',
+    region: 'USA',
+    week: 'April 14, 2026',
+    tone: 'America Votes Hook',
+
+    kpis: [
+      { label: 'Contacts reached',    value: '36',   sub: 'Email · single batch',                           color: '#60d9fa' },
+      { label: 'Delivered',           value: '34',   sub: '94.4% delivery rate',                            color: '#eab308' },
+      { label: 'Reply Rate',          value: '0%',   sub: '0 replies — zero signal from this batch',        color: '#ef4444' },
+      { label: 'Positive Reply Rate', value: '0%',   sub: '0 leads tagged Interested in Lemlist',           color: '#ef4444' },
+      { label: 'Bounce Rate',         value: '5.6%', sub: '2 bounces — list data quality worth reviewing',  color: '#eab308' },
+      { label: 'Open / Click',        value: '0%',   sub: 'No engagement signal detected',                  color: '#ef4444' },
+    ],
+
+    segments: [
+      {
+        name: '⚠ America Votes Batch 4', code: 'AV-B4', contacts: '36',
+        delivLabel: '⚠ 5.6% bounce',    delivClass: 'tag-yellow',
+        replyRate: 0, replyMax: 5.6, replyColor: '#ef4444',
+        note: '0 replies · 2 bounces · hook not landing · list quality review needed before next batch',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: '0% reply — zero signal from America Votes Batch 4',
+        body: '36 contacts sent, 0 replies, 0 opens, 0 clicks. The America Votes hook is not resonating with this batch. No engagement signal at any level.',
+      },
+      {
+        title: '5.6% bounce — list data quality concern',
+        body: '2 bounces from 36 contacts. Elevated for a small batch. The America Votes contact list data should be reviewed and refreshed before next send.',
+      },
+      {
+        title: 'Consider pausing or pivoting this segment',
+        body: '0% reply combined with elevated bounce rate suggests both message and list need work. Evaluate whether to continue with a refreshed hook or pause for list refresh.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      '94.4% delivery rate — most contacts reached despite bounce issue',
+    ],
+
+    whatDidnt: [
+      { text: '0% reply rate — America Votes hook not resonating with Batch 4 contacts', level: 'red' },
+      { text: '0% open + 0% click — zero engagement signal before message content even evaluated', level: 'red' },
+      { text: '5.6% bounce — list data quality issue, 2 invalid contacts', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Review America Votes Batch 4 list quality</strong> <span>— 5.6% bounce + 0 replies suggests stale or low-quality contact data</span>', highlight: true },
+      { text: '<strong>Evaluate hook angle for this batch</strong> <span>— zero engagement across opens, clicks, and replies · message is not landing for this ICP</span>' },
+      { text: '<strong>Consider pausing Batch 4 segment</strong> <span>— if list refresh does not improve results, pause and re-evaluate targeting</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'America Votes · Batch 4',
+      batch: [
+        { label: 'Total Sent',          val: '36 contacts',           color: '' },
+        { label: 'Total Delivered',     val: '34 (94.4%)',            color: '#eab308' },
+        { label: 'Reply Rate',          val: '0% (0 replies)',        color: '#ef4444' },
+        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',  color: '#ef4444' },
+        { label: 'Bounce Rate',         val: '5.6% (2 bounces)',      color: '#eab308' },
+        { label: 'Open / Click',        val: '0% / 0%',               color: '#ef4444' },
+      ],
+      global: [
+        { label: 'Total Sent (all 8 campaigns)', val: '468 · 448 delivered (4.3% bounce)', color: '' },
+        { label: 'Global Reply Rate',            val: '7.9% (37 replies)',                 color: '#eab308' },
+        { label: 'Positive Replies (global)',    val: '0 — leadsInterested = 0',           color: '#ef4444' },
+        { label: '0% reply segments',            val: 'CAM-007 B4 + Email Ops & Admin',    color: '#ef4444' },
+        { label: 'Action required',              val: 'List review · re-evaluate hook',    color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '0% reply',    cls: 'cb-red' },
+      { text: '5.6% bounce', cls: 'cb-yellow' },
+      { text: 'List review', cls: 'cb-yellow' },
+    ],
+  },
+
+  {
+    id: 'CAM-008',
+    batch: 'EU · PPE+PES+LYMEC · Others',
+    region: 'Europe — EU',
+    week: 'April 14, 2026',
+    tone: 'EU Political Outreach',
+
+    kpis: [
+      { label: 'Contacts reached',    value: '91',    sub: 'Email · EU political parties',                      color: '#60d9fa' },
+      { label: 'Delivered',           value: '81',    sub: '89.0% delivery rate',                               color: '#eab308' },
+      { label: 'Reply Rate',          value: '1.1%',  sub: '1 reply · Paula Carvalho Olovsson',                 color: '#ef4444' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',              color: '#ef4444' },
+      { label: 'Bounce Rate',         value: '11.0%', sub: '10 bounces — CRITICAL data quality issue',          color: '#ef4444' },
+      { label: 'Open / Click',        value: '0%',    sub: 'No open or click signal detected',                  color: '#ef4444' },
+    ],
+
+    segments: [
+      {
+        name: '🚨 EU PPE+PES+LYMEC Others', code: 'EU-OTH', contacts: '91',
+        delivLabel: '⚠ 11.0% bounce',       delivClass: 'tag-red',
+        replyRate: 1.1, replyMax: 11.0, replyColor: '#ef4444',
+        note: 'Critical: 11% bounce on EU campaign · immediate list audit required before next send',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: 'CRITICAL: 11.0% bounce rate — EU list audit required immediately',
+        body: '10 bounces from 91 contacts. Critical data quality issue for an EU email campaign. The PPE+PES+LYMEC source list is likely stale. Audit and clean the full list before any re-engagement send. Flag as data quality issue.',
+      },
+      {
+        title: '1 reply captured but body text not available — manual review needed',
+        body: 'Paula Carvalho Olovsson replied but the email body is stored server-side and not captured in preview. Requires manual review in Lemlist to determine intent and qualification.',
+      },
+      {
+        title: 'EU email continues to show structural deliverability weakness',
+        body: '11% bounce on this batch follows the historical pattern of elevated EU email bounce rates. Re-enrichment of the PPE, PES, and LYMEC source lists is structurally necessary before any further EU outreach.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      '1 reply captured — some valid contact data exists in this segment',
+      '89% delivery rate confirms email infrastructure is functional',
+    ],
+
+    whatDidnt: [
+      { text: '11.0% bounce — critical data quality issue, immediate EU list audit required', level: 'red' },
+      { text: '1.1% reply rate — extremely low engagement for 91 contacts sent', level: 'red' },
+      { text: '0% open + 0% click — zero engagement signal beyond the single reply', level: 'red' },
+      { text: 'Reply body not available — pipeline qualification blocked without manual Lemlist review', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Audit EU PPE+PES+LYMEC source list immediately</strong> <span>— 11% bounce is a critical data quality flag · re-enrich and verify before any re-engagement send</span>', highlight: true },
+      { text: '<strong>Manually review Paula Carvalho Olovsson reply in Lemlist</strong> <span>— body text not captured · may be a warm lead</span>' },
+      { text: '<strong>Flag as data quality issue in Clay/CRM</strong> <span>— track bounce root cause and prevent re-sending to invalid EU contacts</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'EU · PPE+PES+LYMEC · Others',
+      batch: [
+        { label: 'Total Sent',          val: '91 contacts',              color: '' },
+        { label: 'Total Delivered',     val: '81 (89.0%)',               color: '#eab308' },
+        { label: 'Reply Rate',          val: '1.1% (1 reply)',           color: '#ef4444' },
+        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',     color: '#ef4444' },
+        { label: 'Bounce Rate',         val: '11.0% — CRITICAL',         color: '#ef4444' },
+        { label: 'Open / Click',        val: '0% / 0%',                  color: '#ef4444' },
+      ],
+      global: [
+        { label: 'Total Sent (all 8 campaigns)', val: '468 · 448 delivered (4.3% bounce)',    color: '' },
+        { label: 'Global Reply Rate',            val: '7.9% (37 replies)',                    color: '#eab308' },
+        { label: 'Positive Replies (global)',    val: '0 — leadsInterested = 0',              color: '#ef4444' },
+        { label: 'Critical issue',               val: 'EU bounce 11% — list audit required',  color: '#ef4444' },
+        { label: 'Action required',              val: 'Audit EU list · manual review reply',  color: '#ef4444' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '11% bounce',   cls: 'cb-red' },
+      { text: 'EU audit now', cls: 'cb-red' },
+      { text: '1.1% reply',  cls: 'cb-red' },
+    ],
+  },
+
+  {
     id: 'CAM-007',
     batch: 'America Votes · 5 Batches',
     region: 'USA',
