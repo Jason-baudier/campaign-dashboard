@@ -605,85 +605,147 @@ const CAMPAIGNS = [
 
   {
     id: 'CAM-007',
-    batch: 'America Votes · Batch 4',
+    batch: 'America Votes — All Batches',
     region: 'USA',
-    week: 'April 14, 2026',
-    tone: 'America Votes Hook',
+    week: 'March 28 – April 14, 2026',
+    tone: 'America Votes Summit Hook',
 
     kpis: [
-      { label: 'Contacts reached',    value: '36',   sub: 'Email · single batch',                           color: '#60d9fa' },
-      { label: 'Delivered',           value: '34',   sub: '94.4% delivery rate',                            color: '#eab308' },
-      { label: 'Reply Rate',          value: '0%',   sub: '0 replies — zero signal from this batch',        color: '#ef4444' },
-      { label: 'Positive Reply Rate', value: '0%',   sub: '0 leads tagged Interested in Lemlist',           color: '#ef4444' },
-      { label: 'Bounce Rate',         value: '5.6%', sub: '2 bounces — list data quality worth reviewing',  color: '#eab308' },
-      { label: 'Open / Click',        value: '0%',   sub: 'No engagement signal detected',                  color: '#ef4444' },
+      { label: 'Batches analyzed',    value: '6',     sub: 'Leadership B1/B2/B3 · Organizers · Others · Batch 4',  color: '#a5a0ff' },
+      { label: 'Total Contacts',      value: '179',   sub: 'March: 143 · April Batch 4: 36',                        color: '#60d9fa' },
+      { label: 'Reply Rate',          value: '3.9%',  sub: '7 replies (March) · 0 (April Batch 4)',                 color: '#eab308' },
+      { label: 'Best Segment',        value: '10.7%', sub: 'Others B1 — grassroots ICP responds best',             color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                  color: '#ef4444' },
+      { label: 'Avg Bounce Rate',     value: '10.8%', sub: 'Worst: Others B1 (17.9%) · Batch 4: 5.6%',            color: '#ef4444' },
     ],
 
     segments: [
       {
+        name: '🔥 Others B1',          code: 'OTH-B1', contacts: '28',
+        delivLabel: '82.1% (17.9% bounce)', delivClass: 'tag-red',
+        replyRate: 10.7, replyMax: 10.7, replyColor: '#22c55e',
+        note: 'Top performer · grassroots ICP · 1 hot lead (Swing Left)',
+      },
+      {
+        name: '✅ Leadership B3',       code: 'LDR-B3', contacts: '22',
+        delivLabel: '86.4% (13.6% bounce)', delivClass: 'tag-red',
+        replyRate: 9.1, replyMax: 10.7, replyColor: '#22c55e',
+        note: '2 replies · 1 absence + 1 direct contact',
+      },
+      {
+        name: 'Leadership B1',          code: 'LDR-B1', contacts: '36',
+        delivLabel: '91.7% (8.3% bounce)',  delivClass: 'tag-yellow',
+        replyRate: 2.8, replyMax: 10.7, replyColor: '#eab308',
+        note: '1 reply (opt-out) · hook not resonating at this level',
+      },
+      {
+        name: '⚠ Leadership B2',       code: 'LDR-B2', contacts: '34',
+        delivLabel: '88.2% (11.8% bounce)', delivClass: 'tag-yellow',
+        replyRate: 0, replyMax: 10.7, replyColor: '#ef4444',
+        note: '0% reply · good delivery · summit hook not landing',
+      },
+      {
+        name: '⚠ Organizers/Com B1',   code: 'ORG-B1', contacts: '23',
+        delivLabel: '91.3% (8.7% bounce)',  delivClass: 'tag-yellow',
+        replyRate: 0, replyMax: 10.7, replyColor: '#ef4444',
+        note: '0% reply · best deliverability · hook angle to rework',
+      },
+      {
         name: '⚠ America Votes Batch 4', code: 'AV-B4', contacts: '36',
-        delivLabel: '⚠ 5.6% bounce',    delivClass: 'tag-yellow',
-        replyRate: 0, replyMax: 5.6, replyColor: '#ef4444',
-        note: '0 replies · 2 bounces · hook not landing · list quality review needed before next batch',
+        delivLabel: '⚠ 5.6% bounce',       delivClass: 'tag-yellow',
+        replyRate: 0, replyMax: 10.7, replyColor: '#ef4444',
+        note: 'April batch · 0 replies · 2 bounces · list review needed',
       },
     ],
 
     takeaways: [
       {
-        title: '0% reply — zero signal from America Votes Batch 4',
-        body: '36 contacts sent, 0 replies, 0 opens, 0 clicks. The America Votes hook is not resonating with this batch. No engagement signal at any level.',
+        title: 'Others ICP outperforms Leadership significantly',
+        body: 'Others B1 (10.7%) and Leadership B3 (9.1%) far exceed Leadership B1 (2.8%), B2 (0%), and Organizers/Com (0%). Grassroots and field-level contacts are far more responsive to this hook.',
       },
       {
-        title: '5.6% bounce — list data quality concern',
-        body: '2 bounces from 36 contacts. Elevated for a small batch. The America Votes contact list data should be reviewed and refreshed before next send.',
+        title: 'Hot lead identified: Swing Left already knows Qomon',
+        body: 'Gautham from Swing Left replied "Familiar with Qomon from my time at..." — warm entry point with existing product awareness. Remove from Lemlist and move to HubSpot immediately.',
       },
       {
-        title: 'Consider pausing or pivoting this segment',
-        body: '0% reply combined with elevated bounce rate suggests both message and list need work. Evaluate whether to continue with a refreshed hook or pause for list refresh.',
+        title: 'Leadership B2 + Organizers/Com = zero signal',
+        body: 'Good deliverability on both segments but 0% reply. The "America Votes Summit" hook does not resonate with these profiles. Rework the angle or test a new subject line.',
+      },
+      {
+        title: 'Bounce rates consistently elevated across all batches',
+        body: 'Ranging from 8.3% to 17.9%. Others B1 has the worst bounce (17.9%). List quality must be improved before the next wave to protect sender reputation.',
+      },
+      {
+        title: '0 leads manually qualified in Lemlist',
+        body: 'All sequences stopped automatically on reply but no one was tagged "Interested." Manual qualification must be done systematically after each send wave.',
+      },
+      {
+        title: 'April Batch 4: zero signal across all metrics',
+        body: '36 contacts sent, 0 replies, 0 opens, 0 clicks. The America Votes hook is not resonating with this batch. List review and hook pivot needed.',
       },
     ],
 
-    leads: [],
+    leads: [
+      {
+        name: 'Gautham',
+        org: 'Swing Left · Hot Lead 🔥',
+        orgColor: '#22c55e',
+        dotColor: '#22c55e',
+        borderColor: 'rgba(34,197,94,.35)',
+        note: '"Hi Joshua - thanks for reaching out! Familiar with Qomon from my time at..." — existing product awareness confirmed.',
+        cta: 'Remove from Lemlist · move to HubSpot now.',
+        ctaColor: '#22c55e',
+      },
+    ],
 
     whatWorked: [
-      '94.4% delivery rate — most contacts reached despite bounce issue',
+      'Others ICP (grassroots/field) is the most reactive segment — 10.7% reply rate',
+      'Leadership B3 generated 2 replies — multi-touch shows some traction with senior profiles',
+      'Hot lead from Swing Left surfaced — product already known to the contact',
+      '94.4% delivery rate on Batch 4 — most contacts reached despite bounce issue',
     ],
 
     whatDidnt: [
-      { text: '0% reply rate — America Votes hook not resonating with Batch 4 contacts', level: 'red' },
-      { text: '0% open + 0% click — zero engagement signal before message content even evaluated', level: 'red' },
-      { text: '5.6% bounce — list data quality issue, 2 invalid contacts', level: 'yellow' },
+      { text: 'Leadership B2: 0% reply despite 88.2% delivery — summit hook not landing on this persona', level: 'red' },
+      { text: 'Organizers/Com B1: 0% reply despite 91.3% delivery — hook angle needs full rework', level: 'red' },
+      { text: 'Bounce rates range 8.3–17.9% across batches — list quality risk to sender reputation', level: 'yellow' },
+      { text: '0% positive reply tagged in Lemlist — manual qualification step missing systematically', level: 'yellow' },
+      { text: '6 of 7 replies were opt-outs or non-committal — only the Swing Left lead has real potential', level: 'yellow' },
+      { text: 'America Votes Batch 4: 0% reply + 0% open + 0% click — zero engagement signal', level: 'red' },
     ],
 
     nextActions: [
-      { text: '<strong>Review America Votes Batch 4 list quality</strong> <span>— 5.6% bounce + 0 replies suggests stale or low-quality contact data</span>', highlight: true },
-      { text: '<strong>Evaluate hook angle for this batch</strong> <span>— zero engagement across opens, clicks, and replies · message is not landing for this ICP</span>' },
-      { text: '<strong>Consider pausing Batch 4 segment</strong> <span>— if list refresh does not improve results, pause and re-evaluate targeting</span>' },
+      { text: '<strong>Move Gautham (Swing Left) to HubSpot immediately</strong> <span>— remove from Lemlist · handle manually · product awareness confirmed</span>', highlight: true },
+      { text: '<strong>Rework hook for Leadership B2 + Organizers/Com</strong> <span>— test an angle decoupled from the America Votes Summit</span>' },
+      { text: '<strong>Scale up Others ICP targeting</strong> <span>— grassroots/field profiles outperform all other segments · prioritize for next batch</span>' },
+      { text: '<strong>Re-enrich Others B1 list</strong> <span>— 17.9% bounce is the highest in this campaign · clean before next send</span>' },
+      { text: '<strong>Review America Votes Batch 4 list quality</strong> <span>— 5.6% bounce + 0 replies suggests stale or low-quality contact data</span>' },
+      { text: '<strong>Qualify all reply contacts in Lemlist</strong> <span>— tag "Interested" systematically after each wave</span>' },
     ],
 
     kpiSnapshot: {
-      batchLabel: 'America Votes · Batch 4',
+      batchLabel: 'America Votes — All Batches',
       batch: [
-        { label: 'Total Sent',          val: '36 contacts',           color: '' },
-        { label: 'Total Delivered',     val: '34 (94.4%)',            color: '#eab308' },
-        { label: 'Reply Rate',          val: '0% (0 replies)',        color: '#ef4444' },
-        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',  color: '#ef4444' },
-        { label: 'Bounce Rate',         val: '5.6% (2 bounces)',      color: '#eab308' },
-        { label: 'Open / Click',        val: '0% / 0%',               color: '#ef4444' },
+        { label: 'Total Sent',            val: '179 contacts (March: 143 · April: 36)', color: '' },
+        { label: 'Total Delivered',       val: '~162 · avg 90.5%',                      color: '#eab308' },
+        { label: 'Reply Rate',            val: '3.9% (7 replies March · 0 April)',      color: '#eab308' },
+        { label: 'Positive Reply Rate',   val: '0% tagged in Lemlist',                  color: '#ef4444' },
+        { label: 'Best — Others B1',      val: '10.7% reply · 17.9% bounce',           color: '#22c55e' },
+        { label: 'Worst — Leadership B2', val: '0% reply · 11.8% bounce',              color: '#ef4444' },
       ],
       global: [
-        { label: 'Total Sent (all 8 campaigns)', val: '468 · 448 delivered (4.3% bounce)', color: '' },
-        { label: 'Global Reply Rate',            val: '7.9% (37 replies)',                 color: '#eab308' },
-        { label: 'Positive Replies (global)',    val: '0 — leadsInterested = 0',           color: '#ef4444' },
-        { label: '0% reply segments',            val: 'CAM-007 B4 + Email Ops & Admin',    color: '#ef4444' },
-        { label: 'Action required',              val: 'List review · re-evaluate hook',    color: '#eab308' },
+        { label: 'Total contacts (global)',   val: '179 sent across 6 batches',               color: '' },
+        { label: 'Global reply rate',         val: '3.9% (7 replies)',                         color: '#eab308' },
+        { label: 'Positive replies (global)', val: '0% marked in Lemlist',                    color: '#ef4444' },
+        { label: 'Hot leads identified',      val: '1 — Gautham (Swing Left)',                color: '#22c55e' },
+        { label: 'Action required',           val: 'Qualify replies · move hot lead to CRM · review Batch 4 list', color: '#eab308' },
       ],
     },
 
     sidebarBadges: [
-      { text: '0% reply',    cls: 'cb-red' },
-      { text: '5.6% bounce', cls: 'cb-yellow' },
-      { text: 'List review', cls: 'cb-yellow' },
+      { text: 'Others: 10.7%',   cls: 'cb-green' },
+      { text: 'Swing Left lead', cls: 'cb-green' },
+      { text: 'Bounce: 10.8%',   cls: 'cb-yellow' },
     ],
   },
 
