@@ -17,7 +17,7 @@
 
     /* ── SIDEBAR ── */
     #sidebar {
-      width: var(--sidebar); min-height: 100vh; background: var(--surface);
+      width: var(--sidebar); height: 100vh; background: var(--surface);
       border-right: 1px solid var(--border); display: flex; flex-direction: column;
       position: fixed; top: 0; left: 0; z-index: 100; transition: transform .3s;
     }
@@ -287,47 +287,57 @@ const CAMPAIGNS = [
     id: 'CAM-010',
     batch: 'Tap to Give · EU Non-Profits · A/B Test',
     region: 'Europe — EU',
-    week: 'April 14, 2026',
+    week: 'April 14 – April 23, 2026',
     tone: 'Tap to Give Initiative Hook',
 
     kpis: [
-      { label: 'Contacts reached',    value: '21',    sub: 'LinkedIn · single batch · Henry Mackintosh sender',      color: '#60d9fa' },
-      { label: 'Delivered',           value: '21',    sub: '100% delivery rate — zero bounces',                      color: '#22c55e' },
-      { label: 'Click Rate',          value: '47.6%', sub: '10 clicks — exceptional engagement signal',              color: '#22c55e' },
-      { label: 'Reply Rate',          value: '19.0%', sub: '4 replies — top LinkedIn performer this week',           color: '#22c55e' },
-      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                   color: '#ef4444' },
-      { label: 'Bounce Rate',         value: '0.0%',  sub: 'Clean EU LinkedIn list — no deliverability issues',      color: '#22c55e' },
+      { label: 'Total Contacts',      value: '274',   sub: 'Email: 253 · LinkedIn: 21 · Henry Mackintosh sender',    color: '#60d9fa' },
+      { label: 'Total Delivered',     value: '176',   sub: 'Email: 155 · LinkedIn: 21 (100%)',                        color: '#eab308' },
+      { label: 'LI Click Rate',       value: '47.6%', sub: '10 clicks — exceptional LinkedIn engagement signal',      color: '#22c55e' },
+      { label: 'LI Reply Rate',       value: '19.0%', sub: '4 replies — top LinkedIn performer · Email: 0.4% (1)',    color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                    color: '#ef4444' },
+      { label: 'Email Bounce Rate',   value: '27.1%', sub: '98/361 bounced — CRITICAL EU data quality issue',         color: '#ef4444' },
     ],
 
     segments: [
       {
-        name: '✅ EU Non-Profits A/B Test', code: 'TAP-EU', contacts: '21',
-        delivLabel: '100% delivered',       delivClass: 'tag-green',
+        name: '🔥 LinkedIn · EU Non-Profits', code: 'LI-TAP-EU', contacts: '21',
+        delivLabel: '100% delivered',          delivClass: 'tag-green',
         replyRate: 19.0, replyMax: 19.0, replyColor: '#22c55e',
-        note: 'Best LinkedIn performer this week · 47.6% click rate · sender name bug on 1 reply (Harry vs Henry)',
+        note: 'Best LinkedIn performer · 47.6% click rate · 4 replies · sender name bug on 1 reply (Harry vs Henry)',
+      },
+      {
+        name: '🚨 Email · EU Non-Profits',    code: 'EM-TAP-EU', contacts: '361',
+        delivLabel: '🚨 27.1% bounce (98)',    delivClass: 'tag-red',
+        replyRate: 0.4, replyMax: 19.0, replyColor: '#ef4444',
+        note: 'CRITICAL: 98 bounces on EU campaign — GDPR risk + deliverability damage · list must be re-verified before any further send',
       },
     ],
 
     takeaways: [
       {
-        title: '19.0% reply rate — top LinkedIn performer this week',
-        body: '4 replies from 21 contacts. Combined with 47.6% click rate, this is the strongest engagement signal across all April 14 campaigns. The Tap to Give hook resonates with EU non-profit audience.',
+        title: 'Email: 27.1% bounce rate — critical EU data quality emergency',
+        body: '98 out of 361 launched contacts bounced. This exceeds the 20% EU threshold and creates GDPR risk plus domain reputation damage. The entire email contact list must be re-verified before any further send on this segment.',
       },
       {
-        title: '47.6% click rate — exceptional content engagement',
-        body: '10 out of 21 contacts clicked. Highest click rate observed across all campaigns to date. The LinkedIn message content and CTA are working well for this ICP.',
+        title: 'LinkedIn: 19.0% reply + 47.6% click — top performer',
+        body: '4 replies from 21 contacts. The Tap to Give hook resonates strongly with the EU non-profit audience on LinkedIn. With 100% delivery and exceptional click rate, LinkedIn is the right channel for this ICP.',
+      },
+      {
+        title: 'Channel gap: LinkedIn 19% vs Email 0.4% for the same ICP',
+        body: 'The same EU non-profit audience responds 47x more on LinkedIn than email. Consider shifting volume entirely to LinkedIn until the email list is cleaned and deliverability restored.',
       },
       {
         title: 'Sender name bug: lead received "Harry" instead of "Henry"',
-        body: 'Anita Sunder Rajan addressed the sender as "Harry" — the template {{firstName}} or sender name variable is pulling incorrectly. Review Henry Mackintosh\'s LinkedIn sequence template before next batch.',
+        body: 'Anita Sunder Rajan addressed the sender as "Harry" — the template sender name variable is pulling incorrectly. Review Henry Mackintosh\'s LinkedIn sequence template before next batch.',
       },
       {
         title: 'Chad Maskell: confirmed long-term nurture opportunity',
         body: '"We don\'t yet do field-based fundraising but will do eventually for a number of our charities." Clear future fit — add to long-term nurture list or flag for a 3–6 month follow-up.',
       },
       {
-        title: '0 leads qualified in Lemlist despite strong engagement',
-        body: 'All 4 sequences auto-stopped on reply but no one was tagged Interested. Manual qualification required to make this pipeline visible.',
+        title: '0 leads qualified in Lemlist despite 5 replies',
+        body: 'All sequences auto-stopped on reply but no one was tagged Interested. Manual qualification required immediately to make pipeline visible.',
       },
     ],
 
@@ -345,47 +355,49 @@ const CAMPAIGNS = [
     ],
 
     whatWorked: [
-      'Tap to Give hook resonates with EU non-profit audience — 19% reply + 47.6% click',
-      'LinkedIn channel: 100% delivery, zero bounces — cleanest list this week',
-      'Strong click rate confirms high content relevance for this ICP',
+      'LinkedIn: 19% reply + 47.6% click — Tap to Give hook resonates with EU non-profit ICP',
+      'LinkedIn: 100% delivery, zero bounces — cleanest list segment',
+      'Strong click rate confirms high content relevance for this ICP on LinkedIn',
     ],
 
     whatDidnt: [
+      { text: 'Email: 27.1% bounce (98/361) on an EU campaign — CRITICAL data quality issue · GDPR risk · pause immediately', level: 'red' },
       { text: 'Sender name bug: Anita Sunder Rajan received "Harry" instead of "Henry" — template variable error', level: 'red' },
+      { text: 'Email reply rate: 0.4% (1 reply from 253 sent) — wrong channel for this ICP', level: 'yellow' },
       { text: '0 positive replies tagged in Lemlist — manual qualification step missing', level: 'yellow' },
-      { text: 'Claudia Lotzwig not a fit for current organisations — ICP targeting can be refined further', level: 'yellow' },
     ],
 
     nextActions: [
+      { text: '<strong>Re-verify entire CAM-010 email contact list</strong> <span>— 27.1% bounce on EU campaign · GDPR risk · do not send further until list is clean</span>', highlight: true },
       { text: '<strong>Fix sender name variable in LinkedIn template</strong> <span>— "Harry" instead of "Henry Mackintosh" · audit sequence before next batch</span>', highlight: true },
+      { text: '<strong>Shift volume to LinkedIn for EU non-profit ICP</strong> <span>— 19% reply vs 0.4% email · same audience · LinkedIn clearly wins</span>' },
       { text: '<strong>Nurture Chad Maskell long-term</strong> <span>— confirmed future fit · add to nurture list · follow up in 3–6 months</span>' },
-      { text: '<strong>Qualify all 4 replies in Lemlist</strong> <span>— tag Interested where applicable · pipeline is currently invisible</span>' },
-      { text: '<strong>Scale Tap to Give LinkedIn sequence</strong> <span>— 19% reply + 47.6% click justifies expanding to more EU non-profits</span>' },
+      { text: '<strong>Qualify all 5 replies in Lemlist</strong> <span>— tag Interested where applicable · pipeline is currently invisible</span>' },
     ],
 
     kpiSnapshot: {
-      batchLabel: 'Tap to Give · EU Non-Profits',
+      batchLabel: 'Tap to Give · EU Non-Profits · Email + LinkedIn',
       batch: [
-        { label: 'Total Sent',          val: '21 contacts',             color: '' },
-        { label: 'Total Delivered',     val: '21 (100%)',               color: '#22c55e' },
-        { label: 'Click Rate',          val: '47.6% (10 clicks)',       color: '#22c55e' },
-        { label: 'Reply Rate',          val: '19.0% (4 replies)',       color: '#22c55e' },
-        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',    color: '#ef4444' },
-        { label: 'Bounce Rate',         val: '0.0% — clean list',       color: '#22c55e' },
+        { label: 'Total Sent',          val: '274 (Email: 253 · LinkedIn: 21)',   color: '' },
+        { label: 'Total Delivered',     val: '176 (Email: 155 · LinkedIn: 21)',   color: '#eab308' },
+        { label: 'Email Bounce Rate',   val: '27.1% (98/361) — CRITICAL',        color: '#ef4444' },
+        { label: 'LI Click Rate',       val: '47.6% (10 clicks)',                 color: '#22c55e' },
+        { label: 'LI Reply Rate',       val: '19.0% (4 replies)',                 color: '#22c55e' },
+        { label: 'Group Reply Rate',    val: '1.8% (5 replies / 274 sent)',       color: '#eab308' },
       ],
       global: [
-        { label: 'Total Sent (all 8 campaigns)',  val: '468 · 448 delivered (4.3% bounce)', color: '' },
-        { label: 'Global Reply Rate',             val: '7.9% (37 replies)',                 color: '#eab308' },
-        { label: 'Positive Replies (global)',     val: '0 — leadsInterested = 0',           color: '#ef4444' },
-        { label: 'LinkedIn vs Email (CAM-005)',   val: '14.4% vs 1.0% — LinkedIn wins',     color: '#22c55e' },
-        { label: 'Action required',               val: 'Fix sender bug · qualify replies',  color: '#eab308' },
+        { label: 'Total Sent (all 10 campaigns)', val: '921 · 792 delivered · 26 replies',        color: '' },
+        { label: 'Global Reply Rate',             val: '2.8% (26 replies)',                         color: '#eab308' },
+        { label: 'Positive Replies (global)',     val: '0 — leadsInterested = 0',                   color: '#ef4444' },
+        { label: 'LI vs Email (same ICP)',        val: '19.0% vs 0.4% — LinkedIn wins decisively',  color: '#22c55e' },
+        { label: 'Action required',               val: 'Re-verify email list · fix sender bug · qualify replies', color: '#ef4444' },
       ],
     },
 
     sidebarBadges: [
-      { text: '19% reply',    cls: 'cb-green' },
-      { text: '47.6% click',  cls: 'cb-green' },
-      { text: 'Sender bug',   cls: 'cb-yellow' },
+      { text: 'LI: 19% reply',    cls: 'cb-green' },
+      { text: '27.1% bounce',     cls: 'cb-red' },
+      { text: 'Sender bug',       cls: 'cb-yellow' },
     ],
   },
 
