@@ -188,6 +188,102 @@
 // ═══════════════════════════════════════════════════════════════════
 const CAMPAIGNS = [
   {
+    id: 'CAM-011',
+    batch: 'Co-auteurs Bruit du Monde · Pre-Event',
+    region: 'France',
+    week: 'April 17–20, 2026',
+    tone: 'Co-authorship / Pre-Event Relationship Hook',
+
+    kpis: [
+      { label: 'Contacts reached',    value: '20',    sub: 'LinkedIn · single batch · Florent sender',                   color: '#60d9fa' },
+      { label: 'Delivered',           value: '20',    sub: '100% delivery rate — zero bounces',                           color: '#22c55e' },
+      { label: 'Click Rate',          value: '70.0%', sub: '14 clicks — highest ever recorded across all campaigns',      color: '#22c55e' },
+      { label: 'Reply Rate',          value: '40.0%', sub: '8 replies — all-time best across all campaigns',              color: '#22c55e' },
+      { label: 'Positive Reply Rate', value: '0%',    sub: '0 leads tagged Interested in Lemlist',                        color: '#ef4444' },
+      { label: 'Bounce Rate',         value: '0.0%',  sub: 'Clean list — zero delivery issues',                           color: '#22c55e' },
+    ],
+
+    segments: [
+      {
+        name: '✅ Co-auteurs Bruit du Monde', code: 'LI-COAUTEURS', contacts: '20',
+        delivLabel: '100% delivered',          delivClass: 'tag-green',
+        replyRate: 40.0, replyMax: 40.0, replyColor: '#22c55e',
+        note: 'All-time best reply rate · 70% click · co-authorship context drives exceptional engagement · 1 wrong target (sophie.binet@tetratech.com)',
+      },
+    ],
+
+    takeaways: [
+      {
+        title: '40.0% reply rate — all-time best across all campaigns',
+        body: '8 replies from 20 contacts. Combined with 70.0% click rate, this is the highest engagement ever observed. Co-authorship and shared event context removes outreach friction entirely.',
+      },
+      {
+        title: '70.0% click rate — exceptional content signal',
+        body: '14 out of 20 contacts clicked. The Bruit du Monde book or event details resonated strongly. The co-author context made every recipient inherently relevant to the message.',
+      },
+      {
+        title: 'Network/co-authorship activation outperforms all cold outreach',
+        body: 'Florent\'s pre-event approach using a co-authored book as context generates dramatically better engagement than cold outreach. Replicate this format for future relationship-based campaigns.',
+      },
+      {
+        title: 'Wrong target: sophie.binet@tetratech.com is not Sophie Binet (CGT)',
+        body: 'The contact replied clarifying she is not Sophie Binet, the CGT Secretary General. This lead was incorrectly identified during enrichment. Remove from list and audit how this contact was sourced.',
+      },
+      {
+        title: '0 leads manually qualified despite 8 warm replies',
+        body: 'leadsInterested = 0 in Lemlist. All 8 replies are warm but none have been tagged Interested. Manual qualification required immediately — pipeline is invisible without it.',
+      },
+    ],
+
+    leads: [],
+
+    whatWorked: [
+      'Co-authorship context as hook: 40% reply + 70% click — all-time campaign record',
+      'LinkedIn channel: 100% delivery, zero bounces — cleanest list this period',
+      'Relationship-based framing removes cold outreach resistance entirely',
+      'Pre-event hook with a shared asset (book) creates a natural, specific conversation starter',
+    ],
+
+    whatDidnt: [
+      { text: 'Wrong target: sophie.binet@tetratech.com is not the Sophie Binet targeted — enrichment error during list building', level: 'red' },
+      { text: '0 leads tagged Interested in Lemlist — 8 warm replies are invisible in the pipeline', level: 'yellow' },
+      { text: 'Most replies express regret about not attending — hook surfaces warm contacts but not active pipeline yet', level: 'yellow' },
+    ],
+
+    nextActions: [
+      { text: '<strong>Remove sophie.binet@tetratech.com from list</strong> <span>— wrong target confirmed · audit enrichment source to prevent recurrence</span>', highlight: true },
+      { text: '<strong>Qualify all 8 replies in Lemlist</strong> <span>— tag Interested where applicable · jbmarre@surfrider.eu and co-authors are warm · pipeline invisible until done</span>' },
+      { text: '<strong>Replicate co-authorship format for future campaigns</strong> <span>— 40% reply + 70% click validates relationship-based outreach as the highest-performing approach</span>' },
+      { text: '<strong>Follow up with warm contacts who couldn\'t attend</strong> <span>— most replied expressing regret · a short post-event message will maintain momentum</span>' },
+    ],
+
+    kpiSnapshot: {
+      batchLabel: 'Co-auteurs Bruit du Monde · Pre-Event',
+      batch: [
+        { label: 'Total Sent',          val: '20 contacts',              color: '' },
+        { label: 'Total Delivered',     val: '20 (100%)',                color: '#22c55e' },
+        { label: 'Click Rate',          val: '70.0% (14 clicks)',        color: '#22c55e' },
+        { label: 'Reply Rate',          val: '40.0% (8 replies)',        color: '#22c55e' },
+        { label: 'Positive Reply Rate', val: '0% tagged in Lemlist',     color: '#ef4444' },
+        { label: 'Bounce Rate',         val: '0.0% — zero bounces',      color: '#22c55e' },
+      ],
+      global: [
+        { label: 'Total Sent (all 10 campaigns)', val: '921 · 792 delivered · 26 replies',   color: '' },
+        { label: 'Global Reply Rate',             val: '2.8% (26 replies)',                    color: '#eab308' },
+        { label: 'Positive Replies (global)',     val: '0 — leadsInterested = 0',              color: '#ef4444' },
+        { label: 'Best campaign',                 val: 'CAM-011 — 40% reply · 70% click',     color: '#22c55e' },
+        { label: 'Action required',               val: 'Fix wrong target · qualify 8 replies', color: '#eab308' },
+      ],
+    },
+
+    sidebarBadges: [
+      { text: '40% reply',    cls: 'cb-green' },
+      { text: '70% click',    cls: 'cb-green' },
+      { text: 'Wrong target', cls: 'cb-red' },
+    ],
+  },
+
+  {
     id: 'CAM-010',
     batch: 'Tap to Give · EU Non-Profits · A/B Test',
     region: 'Europe — EU',
