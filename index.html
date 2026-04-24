@@ -160,6 +160,45 @@
     }
 
     footer { text-align: center; padding: 22px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--border); }
+
+    /* ── VIEW TABS ── */
+    .view-tabs { display: flex; gap: 4px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+    .view-tab { flex: 1; background: none; border: 1px solid transparent; border-radius: 8px; padding: 7px 8px; font-size: 11px; font-weight: 700; letter-spacing: .04em; color: var(--muted); cursor: pointer; transition: all .15s; text-align: center; }
+    .view-tab:hover { background: var(--surface2); color: var(--text); }
+    .view-tab.active { background: rgba(108,99,255,.15); border-color: rgba(108,99,255,.4); color: #a5a0ff; }
+
+    /* ── REPLY ANALYSIS ── */
+    .reply-filter-bar { display: flex; flex-wrap: wrap; gap: 8px; }
+    .reply-filter-btn { background: var(--surface); border: 1px solid var(--border); border-radius: 999px; padding: 6px 16px; font-size: 12px; font-weight: 600; color: var(--muted); cursor: pointer; transition: all .15s; }
+    .reply-filter-btn:hover { border-color: var(--accent); color: var(--text); }
+    .reply-filter-btn.active { background: rgba(108,99,255,.15); border-color: rgba(108,99,255,.4); color: #a5a0ff; }
+
+    .reply-summary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 12px; }
+    .reply-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 14px; text-align: center; cursor: pointer; transition: border-color .15s; }
+    .reply-stat:hover { border-color: rgba(108,99,255,.4); }
+    .reply-stat .rs-val { font-size: 24px; font-weight: 700; }
+    .reply-stat .rs-label { font-size: 10px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; line-height: 1.4; }
+
+    .reply-list { display: flex; flex-direction: column; gap: 14px; }
+    .reply-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 22px; transition: border-color .2s; }
+    .reply-card:hover { border-color: rgba(108,99,255,.35); }
+    .reply-card-header { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .tone-badge { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+    .tone-hot              { background: rgba(34,197,94,.15);   color: #22c55e;  border: 1px solid rgba(34,197,94,.35); }
+    .tone-warm             { background: rgba(96,217,250,.12);  color: #60d9fa;  border: 1px solid rgba(96,217,250,.3); }
+    .tone-not_interested   { background: rgba(239,68,68,.12);   color: #ef4444;  border: 1px solid rgba(239,68,68,.3); }
+    .tone-already_equipped { background: rgba(234,179,8,.12);   color: #eab308;  border: 1px solid rgba(234,179,8,.3); }
+    .tone-ambiguous        { background: rgba(148,163,184,.1);  color: #94a3b8;  border: 1px solid rgba(148,163,184,.2); }
+    .tone-wrong_target     { background: rgba(249,115,22,.12);  color: #f97316;  border: 1px solid rgba(249,115,22,.3); }
+    .tone-bug              { background: rgba(168,85,247,.12);  color: #a855f7;  border: 1px solid rgba(168,85,247,.3); }
+    .reply-cam-tag { font-size: 11px; font-weight: 600; background: rgba(108,99,255,.12); color: #a5a0ff; border-radius: 5px; padding: 2px 8px; }
+    .reply-meta { font-size: 11px; color: var(--muted); }
+    .reply-contact { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .reply-org { font-size: 12px; color: var(--muted); margin-bottom: 10px; }
+    .reply-text { font-size: 14px; color: var(--text); font-style: italic; border-left: 3px solid var(--border); padding-left: 14px; margin-bottom: 12px; line-height: 1.55; }
+    .reply-interp { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .reply-interp strong { color: #a5a0ff; font-weight: 600; }
+    .reply-msg-link { display: inline-block; margin-top: 10px; font-size: 11px; color: var(--muted); background: var(--surface2); border-radius: 6px; padding: 4px 12px; border: 1px solid var(--border); }
   </style>
 </head>
 <body>
@@ -170,6 +209,10 @@
   <div id="sidebar-header">
     <div class="sidebar-logo">📊 Campaign Dashboard</div>
     <div class="sidebar-sub">Lemlist · Outbound P27 France</div>
+  </div>
+  <div class="view-tabs">
+    <button class="view-tab active" id="tab-campaigns" onclick="switchView('campaigns')">Campaigns</button>
+    <button class="view-tab" id="tab-replies" onclick="switchView('replies')">Reply Analysis</button>
   </div>
   <div id="campaigns-list"></div>
 </nav>
@@ -1265,6 +1308,213 @@ const CAMPAIGNS = [
 ];
 
 // ═══════════════════════════════════════════════════════════════════
+//  REPLY DATA
+// ═══════════════════════════════════════════════════════════════════
+const REPLIES = [
+  // ── CAM-011 · Co-auteurs Bruit du Monde · LinkedIn · Florent ──
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 22, 2026', sender: 'Florent',
+    contact: 'angelica.morales.amuzie@demexchange.com', contactName: 'Angelica Morales Amuzie', org: 'DemExchange',
+    text: 'Hi! Yes!! I would love to grab coffee or a drink. I\'m free around 4.',
+    tone: 'hot',
+    interpretation: '<strong>Explicit meeting request with availability.</strong> This is the clearest hot lead across all campaigns — she confirmed, shared her availability and suggested an IRL meetup at the event. Requires same-day follow-up.',
+    messagingLink: '💬 Pre-event hook + physical shared context = fastest path to IRL meeting. Replicate this format.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 21, 2026', sender: 'Florent',
+    contact: 'shawn@mainstreetalliance.org', contactName: 'Shawn', org: 'Main Street Alliance',
+    text: 'Happy to chat but can we do it next week instead?',
+    tone: 'hot',
+    interpretation: '<strong>Confirmed intent to meet — just rescheduling.</strong> Contact is engaged and ready to connect, only requesting a date shift. Schedule for next week immediately before interest fades.',
+    messagingLink: '💬 Event hook created urgency; when the event doesn\'t work, they still want to meet.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'jean-francois.julliard@fne.asso.fr', contactName: 'Jean-François Julliard', org: 'FNE',
+    text: 'Merci, oui je ne pourrai pas non plus m\'y rendre.',
+    tone: 'warm',
+    interpretation: '<strong>Warm acknowledgment, no objection.</strong> The co-author context creates a natural peer relationship. Regrets about the event but no door closed — ideal for a post-event follow-up.',
+    messagingLink: '💬 Co-authorship hook created a genuine connection despite the missed meetup.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'cchabanier@cftc.fr', contactName: 'C. Chabanier', org: 'CFTC',
+    text: 'Moi non plus je ne serai pas au lancement au CESE. Merci pour la mise en contact.',
+    tone: 'warm',
+    interpretation: '<strong>"Merci pour la mise en contact" signals they value the relationship itself.</strong> They acknowledge the CESE launch context specifically — the hook landed. Good base for a post-event reconnect.',
+    messagingLink: '💬 Pre-event + co-authorship = soft yes to the relationship even without meeting.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'anna@womeningamesfrance.org', contactName: 'Anna', org: 'Women in Games France',
+    text: 'Enchantée. Cela aurait été avec plaisir de vous rencontrer ce soir.',
+    tone: 'warm',
+    interpretation: '<strong>Very warm — "avec plaisir" signals genuine interest in meeting.</strong> The missed-event framing generates good will. Strong candidate for a post-event message ("désolé de s\'être manqués, on y revient ?").',
+    messagingLink: '💬 Mutual regret about the missed event = strong emotional base for a follow-up.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 19, 2026', sender: 'Florent',
+    contact: 'thomas.aonzo@smartpheed.fr', contactName: 'Thomas Aonzo', org: 'Smartpheed',
+    text: 'Hello Florent je ne peux y etre non plus... Enchanté !',
+    tone: 'warm',
+    interpretation: '<strong>Short but warm — "Enchanté" mirrors the peer/co-author framing.</strong> Contact is open to the connection even if not attending. Worth a brief follow-up.',
+    messagingLink: '💬 Short warm reply validates the peer angle of the outreach.',
+  },
+  {
+    campaign: 'CAM-010', channel: 'LinkedIn', date: 'Mar 20, 2026', sender: 'Henry',
+    contact: 'lea_jTfD3sSrDA3CtgKT6', contactName: 'Chad Maskell', org: 'EU Non-Profit',
+    text: 'Hi Henry, we don\'t yet do field based fundraising but will do eventually for a number of our charities.',
+    tone: 'warm',
+    interpretation: '<strong>Confirmed future fit with a defined horizon.</strong> "Will do eventually" is not a rejection — it\'s a timing objection with a clear future use case. Add to long-term nurture with a 3–6 month follow-up trigger.',
+    messagingLink: '💬 Tap to Give hook reached the right ICP — adoption timing is the only barrier.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'dmathis@civic-360.com', contactName: 'D. Mathis', org: 'Civic-360',
+    text: 'I\'ll be sure to stop by and introduce myself!',
+    tone: 'warm',
+    interpretation: '<strong>Physical attendance committed.</strong> Contact will show up at the event and introduce themselves — this is an IRL conversion from outreach. Make sure Florent knows to expect them.',
+    messagingLink: '💬 Event hook + physical presence = confirmed IRL touchpoint. Best outcome for this type of campaign.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'anorbitz@globalstrategygroup.com', contactName: 'A. Norbitz', org: 'Global Strategy Group',
+    text: 'you should swing by our happy hour',
+    tone: 'warm',
+    interpretation: '<strong>Reciprocal invite — peer-level engagement confirmed.</strong> Contact is engaging back and inviting Florent to their event. This is networking, not sales resistance. Accept or acknowledge warmly.',
+    messagingLink: '💬 Event hook triggered a counter-invite — the outreach is perceived as peer networking.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 17, 2026', sender: 'Florent',
+    contact: 'lea_n6g3GbJmCFcsivXfk', contactName: 'Anonymous', org: 'Unknown',
+    text: 'Bonjour Florent, bonne idée ! Hâte de lire toutes les contributions.',
+    tone: 'warm',
+    interpretation: '<strong>"Hâte de lire" = genuine interest in the book content itself.</strong> This contact responds to intellectual substance, not just the event. A follow-up sharing a specific chapter or insight would land well.',
+    messagingLink: '💬 Book/content angle resonates — not just the event but the intellectual project.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'jpollock@globalstrategygroup.com', contactName: 'J. Pollock', org: 'Global Strategy Group',
+    text: 'It does not sound like a fit. Thank you for asking though.',
+    tone: 'not_interested',
+    interpretation: '<strong>Polite but explicit rejection.</strong> No fit identified for the product or event. Standard non-response — remove from active pipeline. The "thank you for asking" tone suggests no bad experience, just wrong ICP.',
+    messagingLink: '💬 Hook reached the contact but the value proposition didn\'t land for this profile.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 21, 2026', sender: 'Florent',
+    contact: 'odette@voterev.org', contactName: 'Odette', org: 'VoteRev',
+    text: 'Hi Florent! Thanks for reaching out, but I had a change of schedule.',
+    tone: 'not_interested',
+    interpretation: '<strong>Schedule conflict, not a product rejection.</strong> No explicit "not interested" in Qomon — just can\'t make the event. Low priority for immediate follow-up, but not a hard no.',
+    messagingLink: '💬 Event-specific hook creates time pressure — when the event doesn\'t work, the door partially closes.',
+  },
+  {
+    campaign: 'CAM-010', channel: 'LinkedIn', date: 'Apr 2, 2026', sender: 'Henry',
+    contact: 'lea_j5PW7jkrak2u2Fsc4', contactName: 'Claudia Lotzwig', org: 'EU Non-Profit',
+    text: 'Thank you Henry! It\'s not so relevant for the organisations I\'m working with.',
+    tone: 'not_interested',
+    interpretation: '<strong>ICP fit issue.</strong> Tap to Give doesn\'t match her organisations\' current operations. "Not so relevant" suggests the product exists but doesn\'t apply. Consider narrowing ICP to orgs already doing field fundraising.',
+    messagingLink: '💬 Hook got a reply but product relevance didn\'t land — ICP needs refinement.',
+  },
+  {
+    campaign: 'CAM-010', channel: 'LinkedIn', date: 'Apr 2, 2026', sender: 'Henry',
+    contact: 'lea_7njR5FHJ8F7Ctj8Fb', contactName: 'Anonymous', org: 'EU Non-Profit',
+    text: 'I guess not so relevant the moment.',
+    tone: 'not_interested',
+    interpretation: '<strong>Timing objection — "at the moment" is not a categorical rejection.</strong> Could be worth long-term nurture. The "I guess" hedging suggests uncertainty, not conviction. Different from a hard pass.',
+    messagingLink: '💬 Timing objection = correct ICP, wrong moment. Add to nurture.',
+  },
+  {
+    campaign: 'CAM-010', channel: 'LinkedIn', date: 'Mar 20, 2026', sender: 'Henry',
+    contact: 'lea_Z9AoJPyMAX8344a93', contactName: 'Anita Sunder Rajan', org: 'EU Non-Profit',
+    text: 'Thanks, Harry. We can already do that with SumUp.',
+    tone: 'already_equipped',
+    interpretation: '<strong>Direct competitor signal — SumUp is already in use.</strong> This is the most actionable competitive intelligence in the dataset. A differentiation angle against SumUp (e.g. reporting, CRM integration, compliance) is needed for the EU non-profit ICP.',
+    messagingLink: '💬 SumUp is the main blocker for EU field fundraising orgs. Build a SumUp vs Qomon angle.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 22, 2026', sender: 'Florent',
+    contact: 'rmendoza@globalstrategygroup.com', contactName: 'R. Mendoza', org: 'Global Strategy Group',
+    text: 'Hey Florent,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Opener with no follow-up content captured.</strong> Sequence auto-stopped. Could be an accidental send or the start of a longer message. Needs manual review in Lemlist to see the full reply.',
+    messagingLink: null,
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 21, 2026', sender: 'Florent',
+    contact: 'rene@electica.io', contactName: 'René', org: 'Electica',
+    text: 'Hi Flow,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Opener only — but the informal nickname "Flow" is a positive signal.</strong> Suggests familiarity or a relaxed tone toward the sender. No content — needs manual review.',
+    messagingLink: null,
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'amiles@workingfamilies.org', contactName: 'A. Miles', org: 'Working Families',
+    text: 'Hey,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Single-word opener. No content to analyze.</strong> Sequence auto-stopped. Could be positive or accidental. Needs manual review — the America Votes pre-event context makes this worth checking.',
+    messagingLink: null,
+  },
+  {
+    campaign: 'CAM-010', channel: 'Email', date: 'Apr 9, 2026', sender: 'Henry',
+    contact: 'cal@bestforbritain.org', contactName: 'Cal Roscow', org: 'Best for Britain',
+    text: 'Hi Henry,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Opener only — sender name correctly recognized as "Henry".</strong> No content captured. Sequence auto-stopped. Given the 27.1% bounce rate on this campaign, any reply is noteworthy. Manual review in Lemlist required.',
+    messagingLink: null,
+  },
+  {
+    campaign: 'CAM-003', channel: 'Email', date: 'Apr 10, 2026', sender: 'Axel',
+    contact: 'jbmarre@surfrider.eu', contactName: 'J-B Marré', org: 'Surfrider Foundation',
+    text: 'Bonjour,',
+    tone: 'ambiguous',
+    interpretation: '<strong>French opener — Surfrider Foundation is a major national NGO.</strong> Even a partial reply from this contact is worth pursuing manually. The National Directors segment does respond — the signal alone is positive.',
+    messagingLink: '💬 National Directors do reply — even openers are worth a manual follow-up at this org level.',
+  },
+  {
+    campaign: 'CAM-003', channel: 'Email', date: 'Apr 16, 2026', sender: 'Axel',
+    contact: 'julien.dussart@medecinsdumonde.net', contactName: 'Julien Dussart', org: 'Médecins du Monde',
+    text: 'Bonjour M. Muller,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Both Médecins du Monde contacts replied on the same day — they likely discussed the email internally.</strong> Sender correctly identified as "Axel Muller". This dual signal from one org is significant. Follow up with both in parallel.',
+    messagingLink: '💬 Two contacts from the same org = internal conversation triggered. Follow up together.',
+  },
+  {
+    campaign: 'CAM-003', channel: 'Email', date: 'Apr 16, 2026', sender: 'Axel',
+    contact: 'maryane.cordevant@medecinsdumonde.net', contactName: 'Maryane Cordevant', org: 'Médecins du Monde',
+    text: 'Bonjour Axel,',
+    tone: 'ambiguous',
+    interpretation: '<strong>Second MdM contact replying the same day, also correctly naming "Axel".</strong> This is the stronger signal of the two — she used the first name, suggesting she opened the email and read it. Follow up with both contacts together.',
+    messagingLink: '💬 Same-day dual reply from one org = the message was discussed internally.',
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 19, 2026', sender: 'Florent',
+    contact: 'fsouillot@force-ouvriere.fr', contactName: 'F. Souillot', org: 'Force Ouvrière',
+    text: '👍',
+    tone: 'ambiguous',
+    interpretation: '<strong>Single emoji — positive sentiment, no explicit intent.</strong> Could be acknowledgment of the invitation or the book. Force Ouvrière is a major French trade union — worth a short follow-up to gauge interest.',
+    messagingLink: null,
+  },
+  {
+    campaign: 'CAM-011', channel: 'LinkedIn', date: 'Apr 19, 2026', sender: 'Florent',
+    contact: 'sophie.binet@tetratech.com', contactName: 'Sophie Binet (Tetratech)', org: 'Tetratech',
+    text: 'je suis dsl mais tu t es trompée de Sophie Binet ahah. Bonne journée',
+    tone: 'wrong_target',
+    interpretation: '<strong>Contact is not Sophie Binet the CGT Secretary General — wrong person sourced during enrichment.</strong> Name collision without role or org validation. Remove from list immediately and audit the enrichment process that sourced this contact.',
+    messagingLink: '💬 Enrichment failed — name match without role/org verification. Add a validation step.',
+  },
+  {
+    campaign: 'CAM-007', channel: 'Email', date: 'Apr 20, 2026', sender: 'Florent',
+    contact: 'codi@gipl.org', contactName: 'Codi', org: 'GIPL',
+    text: 'Helen,',
+    tone: 'bug',
+    interpretation: '<strong>Contact addressed the sender as "Helen" — {{senderFirstName}} variable is pulling the wrong value.</strong> Florent is the sender, not Helen. This breaks trust immediately — the contact believes they\'re talking to someone else. Audit the personalization variable in this sequence urgently.',
+    messagingLink: '💬 Sender name bug = identity confusion from the first line. Fix before next send.',
+  },
+];
+
+// ═══════════════════════════════════════════════════════════════════
 //  RENDERING ENGINE — no need to modify below
 // ═══════════════════════════════════════════════════════════════════
 let currentChart = null;
@@ -1495,6 +1745,104 @@ function renderKpiSnapshot(c) {
       </div>
     </div>
   </section>`;
+}
+
+// ── VIEW SWITCHER ──────────────────────────────────────────────────
+const TONE_META = {
+  hot:              { label: '🔥 Hot Lead',        color: '#22c55e' },
+  warm:             { label: '✅ Warm',             color: '#60d9fa' },
+  not_interested:   { label: '❌ Not Interested',   color: '#ef4444' },
+  already_equipped: { label: '🔄 Already Equipped', color: '#eab308' },
+  ambiguous:        { label: '🤔 Ambiguous',        color: '#94a3b8' },
+  wrong_target:     { label: '⚠️ Wrong Target',    color: '#f97316' },
+  bug:              { label: '🐛 Template Bug',     color: '#a855f7' },
+};
+
+let activeFilter = 'all';
+
+function switchView(view) {
+  document.getElementById('tab-campaigns').classList.toggle('active', view === 'campaigns');
+  document.getElementById('tab-replies').classList.toggle('active', view === 'replies');
+  document.getElementById('campaigns-list').style.display = view === 'campaigns' ? '' : 'none';
+  if (view === 'campaigns') {
+    const active = document.querySelector('.campaign-btn.active');
+    const idx = active ? [...document.querySelectorAll('.campaign-btn')].indexOf(active) : 0;
+    renderCampaign(CAMPAIGNS[idx] || CAMPAIGNS[0]);
+  } else {
+    activeFilter = 'all';
+    renderReplyView();
+  }
+}
+
+function renderReplyView() {
+  const counts = {};
+  REPLIES.forEach(r => { counts[r.tone] = (counts[r.tone] || 0) + 1; });
+  const filtered = activeFilter === 'all' ? REPLIES : REPLIES.filter(r => r.tone === activeFilter);
+
+  document.getElementById('page-header').innerHTML = `
+    <div class="badge">REPLY ANALYSIS</div>
+    <h1>Reply Tone &amp; Intent Analysis</h1>
+    <p class="sub">${REPLIES.length} replies across all campaigns · Classified by tone and intent</p>
+    <div class="pill-row">
+      ${Object.entries(TONE_META).filter(([k]) => counts[k]).map(([k, m]) =>
+        `<div class="pill"><strong style="color:${m.color}">${counts[k]}</strong>&nbsp;${m.label}</div>`
+      ).join('')}
+    </div>`;
+
+  document.getElementById('content').innerHTML = `
+    <section>
+      <div class="section-title">Summary</div>
+      <div class="reply-summary-grid">
+        <div class="reply-stat" onclick="setFilter('all')" style="${activeFilter==='all'?'border-color:rgba(108,99,255,.5)':''}">
+          <div class="rs-val" style="color:#a5a0ff">${REPLIES.length}</div>
+          <div class="rs-label">All Replies</div>
+        </div>
+        ${Object.entries(TONE_META).filter(([k]) => counts[k]).map(([k, m]) => `
+          <div class="reply-stat" onclick="setFilter('${k}')" style="${activeFilter===k?`border-color:${m.color}`:''}">
+            <div class="rs-val" style="color:${m.color}">${counts[k]}</div>
+            <div class="rs-label">${m.label}</div>
+          </div>`).join('')}
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Filter</div>
+      <div class="reply-filter-bar">
+        <button class="reply-filter-btn ${activeFilter==='all'?'active':''}" onclick="setFilter('all')">All (${REPLIES.length})</button>
+        ${Object.entries(TONE_META).filter(([k]) => counts[k]).map(([k, m]) =>
+          `<button class="reply-filter-btn ${activeFilter===k?'active':''}" onclick="setFilter('${k}')">${m.label} (${counts[k]})</button>`
+        ).join('')}
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Replies — ${filtered.length} shown</div>
+      <div class="reply-list">
+        ${filtered.map(r => renderReplyCard(r)).join('')}
+      </div>
+    </section>`;
+}
+
+function setFilter(tone) {
+  activeFilter = tone;
+  renderReplyView();
+}
+
+function renderReplyCard(r) {
+  const m = TONE_META[r.tone] || { label: r.tone, color: '#94a3b8' };
+  return `
+    <div class="reply-card">
+      <div class="reply-card-header">
+        <span class="tone-badge tone-${r.tone}">${m.label}</span>
+        <span class="reply-cam-tag">${r.campaign}</span>
+        <span class="reply-meta">${r.channel} · ${r.date} · sender: ${r.sender}</span>
+      </div>
+      <div class="reply-contact">${r.contactName || r.contact}</div>
+      <div class="reply-org">${r.org}${r.org !== r.contact ? ` · <span style="color:var(--muted);font-size:11px">${r.contact}</span>` : ''}</div>
+      <div class="reply-text">"${r.text}"</div>
+      <div class="reply-interp">${r.interpretation}</div>
+      ${r.messagingLink ? `<div class="reply-msg-link">${r.messagingLink}</div>` : ''}
+    </div>`;
 }
 
 function toggleSidebar() { document.getElementById('sidebar').classList.toggle('open'); }
