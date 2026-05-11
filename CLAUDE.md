@@ -9,17 +9,20 @@ Run this workflow each time a new Lemlist campaign analysis is available in Slac
 
 Channel: DM Jason Baudier (ID: U08DC8EFEKD)
 
-Find the MOST RECENT message that contains:
-"Weekly Lemlist Campaign Analysis"
+Find the MOST RECENT message that contains one of:
+- "Weekly Lemlist Campaign Analysis"
+- "Weekly Lemlist Analysis"
 
-Additional signals:
+Additional signals (at least 2 must be present):
 - contains "CAM-"
 - contains "batch"
 - contains "reply rate"
 - contains "segment"
 
+If the analysis is split across multiple parts (e.g. Part 1/3, 2/3, 3/3), read ALL parts sent on the same date and treat them as one combined analysis.
+
 Rules:
-- Only process ONE message (latest valid)
+- Only process the latest valid message set (same date)
 - Ignore replies unless they contain full analysis
 - Ignore noise / unrelated messages
 
@@ -116,20 +119,35 @@ id, batch, region, week, tone, kpis (6 cards), segments, takeaways, leads, whatW
 
 ## STEP 3 — OPEN AND UPDATE FILE
 
-Open `index.html`. Two arrays must be updated:
+Open `index.html`. Two arrays must be updated: CAMPAIGNS and REPLIES.
 
-### A. CAMPAIGNS array (line ~189)
+### A. CAMPAIGNS array (line ~232)
 
-**Duplicate check:** If a campaign with the same `id` already exists → SKIP (do not duplicate).
-
-If new:
+**If a campaign with the same `id` does NOT exist → INSERT:**
 - Insert the new campaign object at **index 0** (top of array)
-- Do NOT modify existing entries
 - Do NOT delete or reorder previous campaigns
+
+**If a campaign with the same `id` ALREADY EXISTS → UPDATE:**
+- Update the following fields with data from the new analysis:
+  - `batch` — extend name if new batches are covered (e.g. "All Batches + Pre-Event")
+  - `week` — extend date range if new data goes beyond the current range
+  - `kpis` — update values to reflect the latest available data
+  - `segments` — add new segments; update existing segment notes and metrics
+  - `leads` — add new hot/warm leads; do NOT remove existing ones
+  - `takeaways` — prepend new takeaways; keep existing ones
+  - `whatWorked` — prepend new items
+  - `whatDidnt` — prepend new items
+  - `nextActions` — prepend urgent new actions; keep existing ones
+  - `kpiSnapshot` — update batch and global metrics
+  - `sidebarBadges` — update to reflect the most relevant current state
+- Do NOT remove or overwrite data that is still accurate
+- Do NOT touch `id`, `region`, `tone` unless they have changed
 
 **Campaign separation rule:** One dashboard entry = one unique CAM code. Never merge different CAM codes.
 
 ### B. REPLIES array (located after CAMPAIGNS)
+
+**This section is ALWAYS updated, whether campaigns are new or existing.**
 
 **Duplicate check:** Before inserting each reply, check if a reply with the same `campaign` + `contact` + `date` already exists in the array.
 
@@ -159,8 +177,8 @@ If any doubt: STOP and do not save
 
 - Save the file
 - Commit with message: `"update: add latest lemlist campaign analysis"`
-- Push to branch `claude/adoring-mendel-ylnpS`
-- Cherry-pick to `main` and push
+- Push to branch `claude/adoring-mendel-SxkxA`
+- If direct push to `main` is blocked: create a PR from a clean branch and merge it immediately
 
 Do NOT modify any other file.
 
@@ -187,9 +205,10 @@ If the Slack message contains multiple CAM codes (e.g. CAM-004 and CAM-005):
 
 ## EXPECTED RESULT
 
-- New campaign(s) added at top of CAMPAIGNS (if not duplicate)
+- New campaign(s) inserted at top of CAMPAIGNS (if new CAM code)
+- Existing campaign(s) updated with latest data (if CAM code already exists)
 - New replies added at top of REPLIES (if not duplicate)
-- Previous entries unchanged
+- Previous reply entries unchanged
 - Dashboard fully functional
 
 ---
